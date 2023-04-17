@@ -9,7 +9,6 @@ import com.koreaIT.demo.repository.ArticleRepository;
 import com.koreaIT.demo.vo.Article;
 
 @Service
-// DB에게 직접 전달하지 않고 Service -> Repository로 전달
 public class ArticleService {
 	
 	private ArticleRepository articleRepository;
@@ -19,8 +18,12 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 	
-	public Article writeArticle(String title, String body) {
-		return articleRepository.writeArticle(title, body);
+	public void writeArticle(String title, String body) {
+		articleRepository.writeArticle(title, body);
+	}
+	
+	public int getLastInsertId() {
+		return articleRepository.getLastInsertId();
 	}
 	
 	public Article getArticleById(int id) {

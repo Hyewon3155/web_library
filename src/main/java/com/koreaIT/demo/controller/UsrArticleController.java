@@ -11,7 +11,6 @@ import com.koreaIT.demo.service.ArticleService;
 import com.koreaIT.demo.vo.Article;
 
 @Controller
-// 사용자에게 화면을 보여주는 기능
 public class UsrArticleController {
 	
 	private ArticleService articleService;
@@ -25,7 +24,12 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public Article doAdd(String title, String body) {
-		return articleService.writeArticle(title, body);
+		
+		articleService.writeArticle(title, body);
+		
+		int id = articleService.getLastInsertId();
+		
+		return articleService.getArticleById(id);
 	}
 	
 	@RequestMapping("/usr/article/getArticle")
