@@ -1,71 +1,27 @@
 package com.koreaIT.demo.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.koreaIT.demo.vo.Article;
 
-@Component
+@Mapper
+
 // DB와 연동하여 실제 기능을 수행하는 Repository
 // -->  ex) DB를 통해 특정 게시물 삭제
-public class ArticleRepository {
+// 구현부를 갖을 필요가 없어서 인터페이스로 바뀜
 
-	private int lastArticleId;
-	private List<Article> articles;
-
-	public ArticleRepository() {
-		this.lastArticleId = 0;
-		this.articles = new ArrayList<>();
-	}
+public interface ArticleRepository {
 	
-	// 서비스 메서드
-	public void makeTestData() {
-		for (int i = 1; i <= 10; i++) {
+	public Article writeArticle(String title, String body);
 
-			String title = "제목" + i;
-			String body = "내용" + i;
-
-			writeArticle(title, body);
-		}
-	}
-
-	public Article writeArticle(String title, String body) {
-		int id = this.lastArticleId + 1;
-		this.lastArticleId = id;
-
-		Article article = new Article(id, title, body);
-
-		articles.add(article);
-
-		return article;
-	}
-
-	public Article getArticleById(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-		return null;
-	}
+	public Article getArticleById(int id);
 	
-	public List<Article> getArticles(){
-		return articles;
-	}
+	public List<Article> getArticles();
 
-	public void modifyArticle(int id, String title, String body) {
-		Article article = getArticleById(id);
+	public void modifyArticle(int id, String title, String body);
 
-		article.setTitle(title);
-		article.setBody(body);
-	}
-
-	public void deleteArticle(int id) {
-		Article article = getArticleById(id);
-
-		articles.remove(article);
-	}
-
+	public void deleteArticle(int id);
+	
 }
