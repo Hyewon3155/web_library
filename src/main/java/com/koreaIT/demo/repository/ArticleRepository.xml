@@ -29,10 +29,12 @@
 	
 	<update id="modifyArticle">
 		UPDATE article
-				SET updateDate = NOW(),
+		    <set>
+		      updateDate = NOW(),
 				title = #{title},
 				`body` = #{body}
 			WHERE id = #{id}
+		    </set>
 	</update>
 	
 	<delete id="deleteArticle">
