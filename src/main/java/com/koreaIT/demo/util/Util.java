@@ -20,7 +20,8 @@ public class Util {
 		return str.trim().length() == 0;
 	}
 	
-	public static Object f(String format, Object...args) {
+	public static String f(String format, Object...args) {
+		//String으로 해야지 리턴타입이 맞음
 		return String.format(format, args);
 		//Object...args --> Object형인 여러 개의 인자를 받을 수 있음
 		//매개변수의 갯수 제한이 사라짐!!
