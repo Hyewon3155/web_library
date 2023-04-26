@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreaIT.demo.repository.ArticleRepository;
+import com.koreaIT.demo.util.Util;
 import com.koreaIT.demo.vo.Article;
+import com.koreaIT.demo.vo.ResultData;
 
 @Service
 public class ArticleService {
@@ -18,8 +20,8 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 	
-	public void writeArticle(String title, String body) {
-		articleRepository.writeArticle(title, body);
+	public void writeArticle(int memberId, String title, String body) {
+		articleRepository.writeArticle(memberId, title, body);
 	}
 	
 	public int getLastInsertId() {
@@ -34,12 +36,46 @@ public class ArticleService {
 		return articleRepository.getArticles();
 	}
 	
-	public void modifyArticle(int id, String title, String body) {
+	public ResultData<Article> modifyArticle(int id, String title, String body) {
+		
 		articleRepository.modifyArticle(id, title, body);
+		
+		return ResultData.from("S-1", Util.f("%d번 게시물을 수정했습니다", id), "article", getArticleById(id));
+		
 	}
 	
 	public void deleteArticle(int id) {
 		articleRepository.deleteArticle(id);
 	}
+	
+	public ResultData actorCanMD(int loginedMemberId, Article article) {
+		if(article == null) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다");
+		}
+		
+		if (loginedMemberId != article.getMemberId()) {
+			return ResultData.from("F-B", "해당 게시물에 대한 권한이 없습니다");	
+		}
+		
+		return ResultData.from("S-1", "가능");
+	}
+
+	public Article getForPrintArticle(int loginedMemberId, int id) {
+		
+		Article article = articleRepository.getForPrintArticle(id);
+		
+		actorCanChangeData(loginedMemberId, article);
+		
+		return article;
+	}
+
+	private void actorCanChangeData(int loginedMemberId, Article article) {
+		
+		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, article);
+		
+		article.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
+	}
+
+
 	
 }

@@ -2,23 +2,27 @@ package com.koreaIT.demo.vo;
 
 import lombok.Data;
 
+// 컨트롤러에서 화면을 구성할 때 보여주는 양식
 @Data
-
 public class ResultData<DT> {
 	private String resultCode;
 	private String msg;
+	private String data1Name;
+	// 가져오는 데이터의 이름
+	// ex) article
 	private DT data1;
+	// 가져오는 데이터(그 자체)
+	// ex) articleService.getArticleById(id)
 	
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
-		return from(resultCode, msg, null);
+		return from(resultCode, msg, null, null);
 	}
 	
-	public static <DT> ResultData<DT> from(String resultCode, String msg, DT data1) {
-		//여기에서 msg 자리에 Util을 받아오는데
-		// 리턴타입이 String이므로 Util.f의 리턴타입을 String으로 설정해주어야 함
+	public static <DT> ResultData<DT> from(String resultCode, String msg, String data1Name, DT data1) {
 		ResultData<DT> rd = new ResultData<>();
 		rd.resultCode = resultCode;
 		rd.msg = msg;
+		rd.data1Name = data1Name;
 		rd.data1 = data1;
 		
 		return rd;
@@ -30,5 +34,7 @@ public class ResultData<DT> {
 	
 	public boolean isFail() {
 		return isSuccess() == false;
+		// isSuccess가 false인게 true
+	    // 즉 isFail은 true를 리턴한다
 	}
 }

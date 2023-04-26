@@ -1,6 +1,5 @@
 package com.koreaIT.demo.util;
 
-// 유효성 검사를 하는 패키지
 public class Util {
 	public static boolean empty(Object obj) {
 		
@@ -11,19 +10,34 @@ public class Util {
 //		if (obj instanceof String == false) {
 //			return true;
 //		}
-		// 타입이 같은지 검사하는 것
-		// obj가 String 타입 --> return true
-		// obj가 String 타입 X --> return str.trim().length()
 		
 		String str = (String) obj;
 		
 		return str.trim().length() == 0;
 	}
-	
-	public static String f(String format, Object...args) {
-		//String으로 해야지 리턴타입이 맞음
+
+	public static String f(String format, Object... args) {
 		return String.format(format, args);
-		//Object...args --> Object형인 여러 개의 인자를 받을 수 있음
-		//매개변수의 갯수 제한이 사라짐!!
+	}
+
+	public static String jsHistoryBack(String msg) {
+		
+		if (msg == null) {
+			msg = "";
+		}
+		
+		return Util.f("""
+					<script>
+						const msg = '%s'.trim();
+						if (msg.length > 0) {
+							alert(msg);
+						}
+						history.back();
+					</script>
+					""", msg);
+	}
+
+	public static String jsReplace(String msg, String uri) {
+		return null;
 	}
 }
