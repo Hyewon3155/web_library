@@ -14,21 +14,24 @@ public class Rq {
 	
 	@Getter
 	private int loginedMemberId;
-//	private HttpServletRequest req;
+	private HttpServletRequest req;
 	private HttpServletResponse resp;
+	private HttpSession httpSession;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		
-//		this.req = req;
+		this.req = req;
 		this.resp = resp;
-		
-		HttpSession httpSession = req.getSession();
+		this.httpSession = req.getSession();
 		
 		int loginedMemberId = 0;
-		
+
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
 		}
+		// 세션에 있는 loginedMemberId가 널이 아닌 경우 --> 로그인을 한 상태인 경우
+		// 세션으로부터 loginedMemberId를 가져와서 loginedMemberId 변수에 넣어줌
+		// 세션에서는 Object이기 때문에 형변환은 필수 
 		
 		this.loginedMemberId = loginedMemberId;
 	}
@@ -46,10 +49,22 @@ public class Rq {
 			e.printStackTrace();
 		}
 	}
-	
-	private void println(String str) {
-		print(str + "\n");
+
+	public void login(Member member) {
+		httpSession.setAttribute("loginedMemberId", member.getId());
+		// 멤버의 아이디를 로그인한 아이디로 지정
 	}
-	
+
+	public void logout() {
+		httpSession.removeAttribute("loginedMemberId");
+		// 세션에 있는 정보를 지움 
+	}
+
+	public String jsturnOnView(String msg, boolean isHistoryBack) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("isHistoryBack", isHistoryBack);
+		
+		return "usr/common/js";
+	}
 	
 }
