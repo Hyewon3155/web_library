@@ -6,10 +6,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
 import com.koreaIT.demo.util.Util;
 
 import lombok.Getter;
 
+@Component
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	
 	@Getter
@@ -25,15 +31,14 @@ public class Rq {
 		this.httpSession = req.getSession();
 		
 		int loginedMemberId = 0;
-
+		
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
 		}
-		// 세션에 있는 loginedMemberId가 널이 아닌 경우 --> 로그인을 한 상태인 경우
-		// 세션으로부터 loginedMemberId를 가져와서 loginedMemberId 변수에 넣어줌
-		// 세션에서는 Object이기 때문에 형변환은 필수 
 		
 		this.loginedMemberId = loginedMemberId;
+		
+		this.req.setAttribute("rq", this);
 	}
 
 	public void jsPrintHistoryBack(String msg) {
@@ -52,19 +57,22 @@ public class Rq {
 
 	public void login(Member member) {
 		httpSession.setAttribute("loginedMemberId", member.getId());
-		// 멤버의 아이디를 로그인한 아이디로 지정
 	}
 
 	public void logout() {
 		httpSession.removeAttribute("loginedMemberId");
-		// 세션에 있는 정보를 지움 
 	}
 
-	public String jsturnOnView(String msg, boolean isHistoryBack) {
+	public String jsReturnOnView(String msg, boolean isHistoryBack) {
+		
 		req.setAttribute("msg", msg);
 		req.setAttribute("isHistoryBack", isHistoryBack);
 		
 		return "usr/common/js";
+	}
+
+	public void initRq() {
+		
 	}
 	
 }

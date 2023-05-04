@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreaIT.demo.repository.ArticleRepository;
-import com.koreaIT.demo.util.Util;
 import com.koreaIT.demo.vo.Article;
 import com.koreaIT.demo.vo.ResultData;
 
@@ -20,8 +19,8 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 	
-	public void writeArticle(int memberId, String title, String body) {
-		articleRepository.writeArticle(memberId, title, body);
+	public void writeArticle(int memberId, int boardId, String title, String body) {
+		articleRepository.writeArticle(memberId, boardId, title, body);
 	}
 	
 	public int getLastInsertId() {
@@ -32,8 +31,11 @@ public class ArticleService {
 		return articleRepository.getArticleById(id);
 	}
 	
-	public List<Article> getArticles(){
-		return articleRepository.getArticles();
+	public List<Article> getArticles(int boardId, String searchKeywordType, String searchKeyword, int itemsInAPage, int page){
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return articleRepository.getArticles(boardId, searchKeywordType, searchKeyword, limitStart, itemsInAPage);
 	}
 	
 	public void modifyArticle(int id, String title, String body) {
@@ -70,6 +72,12 @@ public class ArticleService {
 		article.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
 	}
 
+	public int getArticlesCnt(int boardId, String searchKeywordType, String searchKeyword) {
+		return articleRepository.getArticlesCnt(boardId, searchKeywordType, searchKeyword);
+	}
 
-	
+	public void increaseHitCount(int id) {
+		articleRepository.increaseHitCount(id);
+	}
+
 }

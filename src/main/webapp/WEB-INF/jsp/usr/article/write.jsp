@@ -13,6 +13,20 @@
 						</colgroup>
 						<tbody>
 							<tr>
+								<th>게시판</th>
+								<td>
+									<label>
+										<input type="radio" name="boardId" value="1" checked/>
+										&nbsp;공지사항
+									</label>
+									&nbsp;&nbsp;&nbsp;
+									<label>
+										<input type="radio" name="boardId" value="2"/>
+										&nbsp;자유
+									</label>
+								</td>
+							</tr>
+							<tr>
 								<th>제목</th>
 								<td><input class="input input-bordered w-full" type="text" name="title" placeholder="제목을 입력해주세요"/></td>
 							</tr>
@@ -21,14 +35,14 @@
 								<td><textarea class="textarea textarea-bordered w-full" name="body" placeholder="내용을 입력해주세요"></textarea></td>
 							</tr>
 							<tr>
-								<td colspan="2"><button class="btn-text-link btn btn-active btn-ghost">작성</button></td>
+								<td colspan="2"><button class="btn-text-link btn btn-active">작성</button></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</form>
 			<div class="btns mt-2">
-				<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
+				<button class="btn-text-link btn btn-active" type="button" onclick="history.back();">뒤로가기</button>
 			</div>
 		</div>
 	</section>

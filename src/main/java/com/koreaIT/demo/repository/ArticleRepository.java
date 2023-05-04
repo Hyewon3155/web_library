@@ -9,18 +9,22 @@ import com.koreaIT.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 	
-	public void writeArticle(int memberId, String title, String body);
+	public void writeArticle(int memberId, int boardId, String title, String body);
 	
 	public int getLastInsertId();
 
 	public Article getArticleById(int id);
 	
-	public List<Article> getArticles();
+	public List<Article> getArticles(int boardId, String searchKeywordType, String searchKeyword, int limitStart, int itemsInAPage);
 
 	public void modifyArticle(int id, String title, String body);
 
 	public void deleteArticle(int id);
 
 	public Article getForPrintArticle(int id);
+
+	public int getArticlesCnt(int boardId, String searchKeywordType, String searchKeyword);
+
+	public int increaseHitCount(int id);
 
 }
