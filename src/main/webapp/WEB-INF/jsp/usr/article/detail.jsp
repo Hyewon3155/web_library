@@ -5,27 +5,6 @@
 
 <%@ include file="../common/head.jsp"%>
 
-<div class="flex justify-end px-2">
-	<button>
-		<div class="stats shadow">
-
-			<div class="stat h-15 w-20">
-				<div class="stat-title text-xs text-black-500">좋아요</div>
-				<div class="stat-title text-xl text-red-600">31K</div>
-			</div>
-
-			<div class="stat h-10">
-				<div class="stat-title text-xs text-black-500">싫어요</div>
-				<div class="stat-title text-xl text-blue-600">21K</div>
-			</div>
-
-		</div>
-	</button>
-</div>
-
-
-
-</div>
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
