@@ -29,3 +29,8 @@ html > body {
 	color:olive;
 /* 	text-decoration: underline; */
 }
+
+.border-bottom-line {
+	border-bottom: 1px solid #d6cbcb;
+}
+/* 테일윈드에는 없는 속성, 댓글 위의 선을 만들어주기 위해서 생김 */

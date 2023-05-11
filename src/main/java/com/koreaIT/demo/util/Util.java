@@ -37,7 +37,7 @@ public class Util {
 					""", msg);
 	}
 
-    public static String jsReplace(String msg, String uri) {
+	public static String jsReplace(String msg, String uri) {
 		
 		if (msg == null) {
 			msg = "";
@@ -57,4 +57,5 @@ public class Util {
 				</script>
 				""", msg, uri);
 	}
+	
 }

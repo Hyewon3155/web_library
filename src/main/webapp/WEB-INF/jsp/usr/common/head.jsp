@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- 페이지의 이름을 정해줌 -->
+<!-- 예를 들어 Detail 페이지면 Detail 이렇게! -->
 <title>${pageTitle }</title>
 <!-- 테일윈드 불러오기 -->
 <!-- 노말라이즈, 라이브러리 -->

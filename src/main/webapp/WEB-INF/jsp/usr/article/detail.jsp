@@ -4,8 +4,34 @@
 <c:set var="pageTitle" value="Detail" />
 <%@ include file="../common/head.jsp" %>
 
+	<script>
+		function getReactionPoint(){
+			
+			$.get('../reactionPoint/getReactionPoint', {
+				relId : ${article.id},
+				relTypeCode : 'article'
+			}, function(data) {
+				if (data.data1.sumReactionPoint > 0) {
+					let goodBtn = $('#goodBtn');
+					goodBtn.removeClass('btn-outline');
+					goodBtn.attr('href', '../reactionPoint/doDeleteReactionPoint?relId=${article.id }&relTypeCode=article&point=1');
+				} else if (data.data1.sumReactionPoint < 0) {
+					let badBtn = $('#badBtn');
+					badBtn.removeClass('btn-outline');
+					badBtn.prop('href', '../reactionPoint/doDeleteReactionPoint?relId=${article.id }&relTypeCode=article&point=-1');
+				}
+				
+			}, 'json');
+			
+		}
+		
+		$(function() {
+			getReactionPoint();
+		})
+	</script>
+
 	<section class="mt-8 text-xl">
-		<div class="container mx-auto px-3">
+		<div class="container mx-auto px-3 pb-5 border-bottom-line">
 			<div class="table-box-type-1">
 				<table class="table table-zebra">
 					<colgroup>
@@ -31,17 +57,16 @@
 						<tr>
 							<th>추천</th>
 							<td>
-							<!-- rq(세션)으로부터 로그인한 멤버의 아이디를 가져옴 -->
 								<c:if test="${rq.getLoginedMemberId() == 0 }">
-							    <!-- 로그인한 멤버의 아이디가 0이면 로그인하지 않음 -->
-									<span class="badge">${article.sumReactionPoint }</span>
-									<!-- 추천수만 출력(좋아요, 싫어요 버튼 클릭 불가) -->
-								</c:if>
-								<c:if test="${rq.getLoginedMemberId() != 0 }">
-									<button class="btn btn-outline btn-xs">좋아요👍</button>
 									<span class="ml-2 badge">좋아요 : ${article.goodReactionPoint }개</span>
 									<br />
-									<button class="btn btn-outline btn-xs">싫어요👎</button>
+									<span class="ml-2 badge">싫어요 : ${article.badReactionPoint * -1 }개</span>
+								</c:if>
+								<c:if test="${rq.getLoginedMemberId() != 0 }">
+									<a id="goodBtn" class="btn btn-outline btn-xs" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=1">좋아요👍</a>
+									<span class="ml-2 badge">좋아요 : ${article.goodReactionPoint }개</span>
+									<br />
+									<a id="badBtn" class="btn btn-outline btn-xs" href="../reactionPoint/doInsertReactionPoint?relId=${article.id }&relTypeCode=article&point=-1">싫어요👎</a>
 									<span class="ml-2 badge">싫어요 : ${article.badReactionPoint * -1 }개</span>
 								</c:if>
 							</td>
@@ -56,7 +81,7 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td>${article.body }</td>
+							<td>${article.getForPrintBody() }</td>
 						</tr>
 					</tbody>
 				</table>
@@ -71,4 +96,70 @@
 			</div>
 		</div>
 	</section>
+	
+	<script>
+		function replyWrite_submitForm(form) {
+			
+			form.body.value = form.body.value.trim();
+			
+			if (form.body.value.length < 2) {
+				alert('2글자 이상 입력해주세요');
+				form.body.focus();
+				return;
+			}
+			
+			form.submit();
+		}
+	</script>	
+	
+	<section class="my-5 text-xl">
+		<div class="container mx-auto px-3">
+			<h2>댓글</h2>
+			
+			<c:forEach var="reply" items="${replies }" >
+				<div class="py-2 pl-16 border-bottom-line text-base">
+					<div class="flex justify-between">
+					<!-- 작성자와 동일선상에 두고 flex로 움직이기 위해서 -->
+					<!-- 작성자와 ...의 부모로 div flex를 줌 -->
+					<!-- flex는 부모로 주어야 자식에게 적용됨 -->
+						<div class="font-semibold"><span>${reply.writerName }</span></div>
+			            <!-- ...  btn-circle은 hover 했을 때 동그라미로 표현되도록 -->
+						<div class="dropdown">
+							<button class="btn btn-circle btn-ghost btn-sm mr-8">
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+							</button>
+							<!-- ... 안에 있는 내용 -->
+							<!-- dropdown은 눌렀을 때 밑에 메뉴들이 나타나도록 -->
+							<ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-20">
+						        <!-- 위에 있는 w로 메뉴들의 크기 조절 -->
+						        <li><a>수정</a></li>
+						        <li><a>삭제</a></li>
+					      	</ul>
+						</div>
+					</div>
+					<!-- my는 위아래로 margin을 한꺼번에 줄 수 있음 -->
+					<div class="my-1 text-lg pl-2"><span>${reply.getForPrintBody() }</span></div>
+					<div class="text-xs text-gray-400"><span>${reply.updateDate }</span></div>
+				</div>
+			</c:forEach>
+			
+			<c:if test="${rq.getLoginedMemberId() != 0 }">
+			<!-- 로그인을 한 경우에만 댓글 쓰기가 보이도록 -->
+				<form action="../reply/doWrite" method="POST" onsubmit="replyWrite_submitForm(this); return false;">
+					<input type="hidden" name="relTypeCode" value="article" />
+					<input type="hidden" name="relId" value="${article.id }" />
+					<div class="mt-4 border border-gray-400 rounded-lg text-base p-4">
+					<!-- 세션에서 로그인한 회원의 정보 전체 중 NickName만 가져옴 -->
+					<!-- 이때 loginedMember객체와 nickname은 모두 private이기 때문에 get으로 가져와야 한다-->
+						<div class="mb-2"><span>${rq.getLoginedMember().getNickname() }</span></div>
+<!-- 						밑의 방식으로도 가능함 -->
+<%-- 						<div class="mb-2"><span>${rq.loginedMember.nickname }</span></div> --%>
+						<textarea class="textarea textarea-bordered w-full" name="body" placeholder="댓글을 남겨보세요"></textarea>
+						<div class="flex justify-end"><button class="btn-text-link btn btn-active btn-sm">등록</button></div>
+					</div>
+				</form>
+			</c:if>
+		</div>
+	</section>
+	
 <%@ include file="../common/foot.jsp" %>
