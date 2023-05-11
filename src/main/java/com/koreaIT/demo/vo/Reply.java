@@ -17,6 +17,7 @@ public class Reply {
 	private String body;
 	
 	private String writerName;
+	private boolean actorCanChangeData;
 	
 	public String getForPrintBody() {
 		// replaceAll은 앞에 있는 인자를 뒤에 있는 인자로 치환하겠다
