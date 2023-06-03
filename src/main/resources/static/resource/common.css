@@ -1,36 +1,62 @@
-/* @charset "UTF-8"; */
 @font-face {
-    font-family: 'NanumSquareNeo-Variable';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
     font-style: normal;
 }
 
 html > body {
-	font-family: 'NanumSquareNeo-Variable', sans-serif;
-	text-underline-position:under;
+  font-family: 'SUITE-Regular', monospace;
 }
 
-.table-box-type-1 > table {
-	width: 100%;
+.main_bg_img {
+    position: relative;
+    background-image: url("https://img.etoday.co.kr/pto_db/2020/10/20201020035723_1526967_910_340.jpg");                                                               
+    height: 100vh;
+    background-size: cover;
 }
 
-.table-box-type-1 > table th, .table-box-type-1 > table td {
-	border:1px solid black;
-	padding: 10px;
-	text-align: center;
+.img-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.4);                                                                 
+   z-index:1;
 }
 
-.btn-text-link {
-	color:white;
+.main_bg_img .content{
+     position: absolute;
+     top:50%;
+     left:50%;
+     transform: translate(-50%, -50%);                                                                   
+     font-size:2.5rem;
+     color: white;
+     z-index: 2;
+     text-align: center;
 }
 
-.btn-text-link:hover {
-	color:olive;
-/* 	text-decoration: underline; */
+.slide-in {
+  animation: change 5s ease-out alternate;
+  animation-iteration-count: 3;
 }
 
-.border-bottom-line {
-	border-bottom: 1px solid #d6cbcb;
+@keyframes change {
+  from {
+    transform: translateX(100%);
+    visibility: visible;
+  }
+
+  to {
+    transform: translateX(0%);
+  }
 }
-/* 테일윈드에는 없는 속성, 댓글 위의 선을 만들어주기 위해서 생김 */
+
+.login_bg_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     min-height: 100vh;
+    align-items: center;
+    background-color: #ffdab9;
+    background-size: cover;
+}
