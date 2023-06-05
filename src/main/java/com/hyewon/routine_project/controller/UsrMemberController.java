@@ -45,9 +45,11 @@ public class UsrMemberController {
 		if (Util.empty(nickname)) {
 			return Util.jsHistoryBack("닉네임을 입력해주세요");
 		}
+		
 		if (Util.empty(email)) {
 			return Util.jsHistoryBack("이메일을 입력해주세요");
 		}
+		
 		if (Util.empty(cellphoneNum)) {
 			return Util.jsHistoryBack("전화번호를 입력해주세요");
 		}
@@ -155,7 +157,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/user/member/doModify")
 	@ResponseBody
-	public String doModify(String name, String nickname, String cellphoneNum, String email) {
+	public String doModify(String name, String nickname, String cellphoneNum, String email_name, String email_domain) {
 		
 		if (Util.empty(name)) {
 			return Util.jsHistoryBack("이름을 입력해주세요");
@@ -169,9 +171,7 @@ public class UsrMemberController {
 			return Util.jsHistoryBack("전화번호를 입력해주세요");
 		}
 		
-		if (Util.empty(email)) {
-			return Util.jsHistoryBack("이메일을 입력해주세요");
-		}
+		String email = email_name + "@" + email_domain;
 		
 		memberService.doModify(rq.getLoginedMemberId(), name, nickname, cellphoneNum, email);
 		

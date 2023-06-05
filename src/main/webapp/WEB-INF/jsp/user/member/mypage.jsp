@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <title>MYPAGE</title>
 <%@ include file="../common/head.jsp" %>
+<%@ include file="main.jsp" %>
 <h1 class="font-semibold text-2xl text-center pt-5">MYPAGE</h1>
 
 

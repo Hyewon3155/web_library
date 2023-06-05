@@ -101,7 +101,10 @@
 			
 		}, 'json');
 	}
+	  
+
 </script>
+
 
 <h1 class="font-semibold text-2xl text-center pt-5">ROUTINE</h1>
 
@@ -118,7 +121,7 @@
       <i class="fa-solid fa-user-lock mr-2"></i>
       <input type="text" name="loginPw" placeholder="비밀번호">
       <hr class="mt-2">
-      <h1 class="block font-semibold mb-2">PW_CHK</h1>
+      <h1 class="block font-semibold mb-2 mt-2">PW_CHK</h1>
       <i class="fa-solid fa-user-lock mr-2"></i>
       <input type="text" name="loginPwChk" placeholder="비밀번호 확인">
       <hr class="mt-2">
@@ -132,14 +135,14 @@
       <hr class="mt-2">
       <h1 class="block font-semibold mb-2 mt-2">EMAIL</h1>
       <i class="fa-solid fa-envelope mr-2"></i>
-      <input type="text" name="email" placeholder="이메일">
+      <input type="email" name="email" placeholder="이메일"/>
       <hr class="mt-2">
       <h1 class="block font-semibold mb-2 mt-2">PHONE</h1>
       <i class="fa-solid fa-mobile-screen mr-2"></i>
-      <input type="text" name="cellphoneNum" placeholder="전화번호">
+      <input type="tel" name="cellphoneNum" placeholder="전화번호">
       <hr class="mt-2">
       <br>
-      <button class="btn btn-success btn-wide">JOIN</button>
+      <button class="btn btn-success w-full">JOIN</button>
     </form>
     <div class="btns mt-2">
 		<button class="btn-text-link btn btn-active" type="button" onclick="history.back();">뒤로가기</button>
