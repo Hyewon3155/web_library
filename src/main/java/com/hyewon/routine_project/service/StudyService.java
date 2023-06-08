@@ -22,7 +22,7 @@ public class StudyService {
 		this.studyRepository = studyRepository;
 	}
 	
-	public void createGroup(MultipartFile file, String host, int headCount, int status, String name, String body) throws IOException {
+	public void createGroup(MultipartFile file, String host, int headCount, int status, String name, String body, String pw) throws IOException {
 		
 		if (file.isEmpty()) {
 			return;
@@ -38,7 +38,7 @@ public class StudyService {
 		
 		String savedPath = fileDir + "/" + savedName;
 		
-		studyRepository.createGroup(host, headCount, status, name, body, savedPath);
+		studyRepository.createGroup(host, headCount, status, name, body, savedPath, pw);
 	}
 	
 	public int getLastInsertId() {

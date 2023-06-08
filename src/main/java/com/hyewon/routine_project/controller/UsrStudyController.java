@@ -28,7 +28,7 @@ public class UsrStudyController {
 	
 	@RequestMapping("/user/group/doWrite")
 	@ResponseBody
-	public String doWrite(MultipartFile file, int headCount, int status, String name, String body) {
+	public String doWrite(MultipartFile file, int headCount, int status, String name, String body, String pw) {
 		
 		if (Util.empty(name)) {
 			return Util.jsHistoryBack("그룹 이름을 입력해주세요");
@@ -38,15 +38,16 @@ public class UsrStudyController {
 			return Util.jsHistoryBack("내용을 입력해주세요");
 		}
 		
+		
 		try {
-			studyService.createGroup(file, rq.getLoginedMember().getLoginId(), headCount, status, name, body);
+			studyService.createGroup(file, rq.getLoginedMember().getLoginId(), headCount, status, name, body, Util.sha256(pw));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		int id = studyService.getLastInsertId();
 
-		return Util.jsReplace(Util.f("%d번 그룹이 생성되었습니다", id), "../member/main");
+		return Util.jsReplace(Util.f("%d번 그룹이 생성되었습니다", id), "../member/main_head");
 	}
 
 }

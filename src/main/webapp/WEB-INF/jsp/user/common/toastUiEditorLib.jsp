@@ -284,32 +284,5 @@ function getUriParams(uri) {
 	  ToastEditorView__init();
 	});
 
-	function submitForm(form) {
-	  form.title.value = form.title.value.trim();
-	  // 제목을 공백없이 받음
-	  
-	  if (form.title.value.length == 0) {
-		  // 제목을 입력하지 않은 경우, 제목을 입력해달라는 알림창과 함께 커서 이동
-	    alert('제목을 입력해주세요');
-	    form.title.focus();
-	    return;
-	  }
-	  
-	  const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
-	  // editor라는 변수에 form에서 .toast-ui-editor의 데이터를 찾아줌
-	  // 이건 body에서 확인할 수 없기 때문에 form에 있는 toast-ui의 입력받은 값을 확인해주는 용도
-	  
-	  const markdown = editor.getMarkdown().trim();
-	  //
 
-	  if (markdown.length == 0) {
-	    alert('내용을 입력해주세요');
-	    editor.focus();
-	    return;
-	  }
-	  
-	  form.body.value = markdown;
-	  
-	  form.submit();
-	}
 </script>

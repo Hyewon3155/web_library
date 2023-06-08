@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <title>Password_Modify</title>
 <%@ include file="../common/head.jsp" %>
-<%@ include file="main.jsp" %>
+<%@ include file="main_head.jsp" %>
 	<div class="login_bg_img">
 	  <div class="card card-compact w-96 bg-base-100 shadow-xl layer">
 	    <h1 class="font-semibold text-2xl text-center pt-5">CheckPassword</h1>

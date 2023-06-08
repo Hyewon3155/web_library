@@ -114,12 +114,12 @@ public class UsrMemberController {
 
 		rq.login(member);
 		
-		return Util.jsReplace(Util.f("%s 회원님 환영합니다~!", member.getNickname()), "main");
+		return Util.jsReplace(Util.f("%s 회원님 환영합니다~!", member.getNickname()), "main_head");
 	}
 	
-	@RequestMapping("user/member/main")
+	@RequestMapping("user/member/main_head")
 	public String main() {
-		return "user/member/main";
+		return "user/member/main_head";
 	}
 	
 	@RequestMapping("/user/member/doLogout")
@@ -267,6 +267,11 @@ public class UsrMemberController {
 		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);
 		
 		return Util.jsReplace(notifyTempLoginPwByEmailRd.getMsg(), "login");
+	}
+	
+	@RequestMapping("/user/member/schedule")
+	public String showSchedule() {
+		return "user/member/schedule";
 	}
 
 
