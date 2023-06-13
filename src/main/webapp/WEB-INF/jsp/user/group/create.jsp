@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<title>루틴 그룹 생성</title>
+<c:set var="pageTitle" value="루틴 그룹 생성" />
 <%@ include file="../common/head.jsp" %>
-<%@ include file="../member/main_head.jsp" %>
 <%@ include file="../common/toastUiEditorLib.jsp" %>
  <script>
       function previewImage(event) {
@@ -18,12 +17,7 @@
 
       function submitForm(form) {
     	  
-        form.file.value = form.file.value.trim();
-    		if (form.file.value.length == 0) {
-    			alert('사진을 업로드해주세요');
-    			form.file.focus();
-    			return;
-        }
+        
   		
   		form.status.value = form.status.value.trim();
   		if (form.status.value.length == 0) {
@@ -77,6 +71,13 @@
      	    return;
      	  }
   		 form.body.value = markdown;
+  		 
+  		form.file.value = form.file.value.trim();
+		if (form.file.value.length == 0) {
+			alert('사진을 업로드해주세요');
+			form.file.focus();
+			return;
+    }
   		
   		form.submit();
   	}

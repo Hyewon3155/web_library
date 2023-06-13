@@ -17,6 +17,5 @@ public class Study {
 	private int status;
 	private int headCount;
 	private String pw;
-	private String file_savedPath;
 
 }

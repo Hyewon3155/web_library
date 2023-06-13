@@ -1,0 +1,42 @@
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId VARCHAR(20) NOT NULL UNIQUE,
+	loginPw VARCHAR(100) NOT NULL,
+	`authLevel` SMALLINT UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한 레벨 (일반 = 3, 방장 = 7)',
+	`name` VARCHAR(20) NOT NULL,
+	nickname VARCHAR(20) NOT NULL,
+	cellphoneNum VARCHAR(20) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
+	delDate DATETIME COMMENT '탈퇴 날짜',
+	`status` SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '스터디 가입 여부 (가입 = 1, 가입 X = 0)',
+	study_group VARCHAR(20) 
+);
+
+ALTER TABLE `member` 
+MODIFY COLUMN study_group VARCHAR(20) DEFAULT NULL;
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = 'dkdk',
+nickname = 'dkdk',
+email = 'kho3155@naver.com',
+cellphoneNum = '000000';
+
+CREATE TABLE study(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(20) NOT NULL UNIQUE COMMENT '스터디 이름',
+	`body` TEXT NOT NULL,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`host` VARCHAR(20) NOT NULL COMMENT '방장',
+	`status` INT UNSIGNED NOT NULL COMMENT '(공개=1, 비공개=2)',
+	pw VARCHAR(100),
+    headCount INT UNSIGNED NOT NULL,
+    file_savedPath VARCHAR(100) NOT NULL
+);

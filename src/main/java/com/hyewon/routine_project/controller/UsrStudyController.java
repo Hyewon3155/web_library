@@ -29,7 +29,12 @@ public class UsrStudyController {
 	@RequestMapping("/user/group/doWrite")
 	@ResponseBody
 	public String doWrite(MultipartFile file, int headCount, int status, String name, String body, String pw) {
-		
+		if(Util.empty(headCount)) {
+			return Util.jsHistoryBack("그룹 정원을 설정해주세요");
+		}
+		if(Util.empty(status)) {
+			return Util.jsHistoryBack("그룹 공개 여부를 설정해주세요");
+		}
 		if (Util.empty(name)) {
 			return Util.jsHistoryBack("그룹 이름을 입력해주세요");
 		}
@@ -49,6 +54,10 @@ public class UsrStudyController {
 
 		return Util.jsReplace(Util.f("%d번 그룹이 생성되었습니다", id), "../member/main_head");
 	}
+	
+	@RequestMapping("/user/group/doModify")
+	@ResponseBody
+	String doModify()
 
 }
 

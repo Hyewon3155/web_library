@@ -114,12 +114,7 @@ public class UsrMemberController {
 
 		rq.login(member);
 		
-		return Util.jsReplace(Util.f("%s 회원님 환영합니다~!", member.getNickname()), "main_head");
-	}
-	
-	@RequestMapping("user/member/main_head")
-	public String main() {
-		return "user/member/main_head";
+		return Util.jsReplace(Util.f("%s 회원님 환영합니다~!", member.getNickname()), "/");
 	}
 	
 	@RequestMapping("/user/member/doLogout")

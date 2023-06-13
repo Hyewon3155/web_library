@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<title>MODIFY</title>
+<c:set var="pageTitle" value="Modify" />
 <%@ include file="../common/head.jsp" %>
-<%@ include file="main_head.jsp" %>
 <h1 class="font-semibold text-2xl text-center pt-5">MODIFY</h1>
 
 
