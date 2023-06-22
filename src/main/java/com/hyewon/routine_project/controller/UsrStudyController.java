@@ -52,12 +52,8 @@ public class UsrStudyController {
 
 		int id = studyService.getLastInsertId();
 
-		return Util.jsReplace(Util.f("%d번 그룹이 생성되었습니다", id), "../member/main_head");
+		return Util.jsReplace(Util.f("%d번 그룹이 생성되었습니다", id), "/");
 	}
-	
-	@RequestMapping("/user/group/doModify")
-	@ResponseBody
-	String doModify()
 
 }
 

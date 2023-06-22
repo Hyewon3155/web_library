@@ -4,7 +4,7 @@
 <c:set var="pageTitle" value="Login" />
 <%@ include file="../common/head.jsp" %>
 	<div class="login_bg_img">
-	  <div class="card card-compact w-96 bg-base-100 shadow-xl layer">
+	  <div class="card card-compact w-96 bg-base-100 shadow-xl">
 	    <h1 class="font-semibold text-2xl text-center pt-5">Login</h1>
 	    <div class="card-body">
 	     <form action="doLogin" method="POST">

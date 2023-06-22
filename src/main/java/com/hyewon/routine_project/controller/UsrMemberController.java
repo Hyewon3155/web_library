@@ -264,10 +264,14 @@ public class UsrMemberController {
 		return Util.jsReplace(notifyTempLoginPwByEmailRd.getMsg(), "login");
 	}
 	
-	@RequestMapping("/user/member/schedule")
-	public String showSchedule() {
-		return "user/member/schedule";
+	@RequestMapping("/user/member/codeEditor")
+	public String showCodeEditor() {
+		return "user/member/codeEditor";
 	}
 
-
+	
+	
 }
+
+
+

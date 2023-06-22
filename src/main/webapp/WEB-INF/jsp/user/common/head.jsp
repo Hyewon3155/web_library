@@ -22,6 +22,16 @@
   <link rel="stylesheet" href="/resource/common.css" />
   <script src="/resource/common.js" defer="defer"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/javascript/javascript.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/theme/dracula.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/addon/hint/show-hint.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/addon/hint/javascript-hint.min.js"></script>
 </head>
 <body>
   <div class="navbar bg-base-100">
@@ -35,7 +45,8 @@
 	        <li><a href="/user/member/mypage">마이페이지</a></li>
 	        <li><a href="/user/member/doLogout">로그아웃</a></li>
 	        <li><a href="/user/group/create">루틴 생성하기</a></li>
-	        <li><a href="/user/member/schedule">내 스케줄보기</a>
+	        <li><a href="/user/member/schedule">내 스케줄보기</a></li>
+	        <li><a href="/user/member/codeEditor">내 코드보기</a></li>
 	      </ul>
 	  </c:if>
     </div>
