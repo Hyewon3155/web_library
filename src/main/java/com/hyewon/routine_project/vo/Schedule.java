@@ -2,6 +2,8 @@ package com.hyewon.routine_project.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Schedule {
 	private int id;
 	private int event_member;
-	private Date event_date;
+	private String event_date;
 	private String event_name;
 	private String event_body;
 	private String event_color;

@@ -13,12 +13,12 @@ public class ScheduleService {
 	private ScheduleRepository scheduleRepository;
 	
 	@Autowired
-	public ScheduleService(ScheduleRepository ScheduleRepository) {
+	public ScheduleService(ScheduleRepository scheduleRepository) {
 		this.scheduleRepository = scheduleRepository;
 	}
 	
 	
-	public void addSchedule(int id, int loginedMemberId, Date event_date, String event_name, String event_body, String event_color) {
+	public void addSchedule(int id, int loginedMemberId, String event_date, String event_name, String event_body, String event_color) {
 		scheduleRepository.addSchedule(id, loginedMemberId, event_date, event_name, event_body, event_color);
 	}
 	

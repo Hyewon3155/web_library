@@ -79,7 +79,7 @@
 		});
 		 var new_date = '';
 		 function add(form){
-			    var str = new Date(form.add_date.value);
+			    var str = new Date(form.event_date.value);
 			    var rand_id = Math.floor(Math.random() * 1001);
 			    var month = str.getMonth()+1;
 			    var day = str.getDate();
@@ -87,21 +87,21 @@
 			    var options = { month: 'long'};
 			    var real_month = new Intl.DateTimeFormat('en-US', options).format(str).substr(0,3);
 			    new_date = real_month + ' ' + day + ', ' + year;
-			    var event_name = form.add_schedule_name.value.trim();
-			    var event_body = form.add_schedule_body.value.trim();
+			    var event_name = form.event_name.value.trim();
+			    var event_body = form.event_body.value.trim();
 			    if(  new_date == null ){
 			    	alert('날짜를 선택해주세요');
-			    	form.add_date.focus();
+			    	form.event_date.focus();
 			    	return;
 			    }
 			    if( event_name.length == 0 ){
 			        alert('일정 이름을 입력해주세요');
-			        form.add_schedule_name.focus();
+			        form.event_name.focus();
 			        return;
 			    }
 			    if( event_body.length == 0 ){
 			    	alert('일정 내용을 입력해주세요');
-			    	form.add_schedule_body.focus();
+			    	form.event_body.focus();
 			    	return;
 			    }
 			    $('#calendar').evoCalendar('addCalendarEvent', {
@@ -111,7 +111,7 @@
 					   date: new_date,
 					   color: "#63d867"
 			    });
-			    form.color.value = "#63d867";
+			    form.event_color.value = "#63d867";
 			    form.id.value = rand_id;
 			    form.submit();
 		 }
@@ -139,20 +139,20 @@
 		<span class="add-close-x-btn">&times;</span> 
 		<form action="addSchedule" method="POST" onsubmit="add(this); return false;">
 		<input type="text" name="id" class="hidden"/>
-		<input type="text" name="color" class="hidden"/>
+		<input type="text" name="event_color" class="hidden"/>
 		<div class="flex text-black items-center text-sm mt-7">
 		   <h1>이벤트 날짜</h1>
 		</div>
 			<div class="flex justify-center text-black">
-			   <input type="date" name="add_date" class="input input-bordered"/>
+			   <input type="date" name="event_date" class="input input-bordered"/>
 			</div>
 			<h1 class="text-black mt-5 text-sm">일정제목</h1>
 			<div class="flex justify-center text-black">
-			   <input type="text" name="add_schedule_name" class="input input-bordered w-full" placeholder="일정 제목을 입력해주세요"/>		   
+			   <input type="text" name="event_name" class="input input-bordered w-full" placeholder="일정 제목을 입력해주세요"/>		   
 			</div>
 			<h1 class="text-black mt-5 text-sm">일정내용</h1>
 			<div class="flex justify-center text-black">
-			   <input type="text" name="add_schedule_body" class="input input-bordered w-full" placeholder="일정 내용을 입력해주세요"/>		   
+			   <input type="text" name="event_body" class="input input-bordered w-full" placeholder="일정 내용을 입력해주세요"/>		   
 			</div>
 			<button class="btn btn-active">추가하기</button>
 		</form>

@@ -3,8 +3,10 @@ package com.hyewon.routine_project.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyewon.routine_project.service.ScheduleService;
@@ -30,7 +32,8 @@ public class UsrScheduleController {
 	
 	@RequestMapping("/user/member/addSchedule")
 	@ResponseBody
-	public String addSchedule(int id,  String event_color, Date event_date, String event_name, String event_body) {
+	public String addSchedule(int id,  String event_color, String event_date
+, String event_name, String event_body) {
 		
 		if (Util.empty(event_date)) {
 			return Util.jsHistoryBack("response 날짜를 선택해주세요");
