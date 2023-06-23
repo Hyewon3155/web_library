@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
 <div id="calendar"></div>
  <script>
+         var i = 0;
+
 		 $("#calendar").evoCalendar();
 		
 		var active_date = $('#calendar').evoCalendar('getActiveDate');
@@ -78,17 +80,19 @@
 			
 		});
 		 var new_date = '';
+		 var rand_id = Math.floor(Math.random() * 1001);
+		 var event_name = '';
+		 var event_body = '';
 		 function add(form){
 			    var str = new Date(form.event_date.value);
-			    var rand_id = Math.floor(Math.random() * 1001);
 			    var month = str.getMonth()+1;
 			    var day = str.getDate();
 			    var year = str.getFullYear();
 			    var options = { month: 'long'};
 			    var real_month = new Intl.DateTimeFormat('en-US', options).format(str).substr(0,3);
 			    new_date = real_month + ' ' + day + ', ' + year;
-			    var event_name = form.event_name.value.trim();
-			    var event_body = form.event_body.value.trim();
+			    event_name = form.event_name.value.trim();
+			    event_body = form.event_body.value.trim();
 			    if(  new_date == null ){
 			    	alert('날짜를 선택해주세요');
 			    	form.event_date.focus();
@@ -104,18 +108,19 @@
 			    	form.event_body.focus();
 			    	return;
 			    }
-			    $('#calendar').evoCalendar('addCalendarEvent', {
-			           id: rand_id,
-					   name: event_name,
-					   description: event_body,
-					   date: new_date,
-					   color: "#63d867"
-			    });
+			    i = 1;
 			    form.event_color.value = "#63d867";
 			    form.id.value = rand_id;
 			    form.submit();
 		 }
-		
+		 
+			$('#calendar').evoCalendar('addCalendarEvent', {
+		           id: rand_id,
+				   name: event_name,
+				   description: event_body,
+				   date: new_date,
+				   color: "#63d867"
+		    });
 		
 	
  </script>

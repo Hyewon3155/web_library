@@ -7,15 +7,19 @@
 <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+<script src="src/ext-inline_autocomplete.js" type="text/javascript" charset="utf-8"></script>
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
+    editor.setKeyboardHandler("ace/keyboard/sublime");
     var JavaScriptMode = ace.require("ace/mode/javascript").Mode;
     editor.session.setMode(new JavaScriptMode());
     editor.setOptions({
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true
     });
+
+
 </script>
 	
 <%@ include file="../common/foot.jsp" %>

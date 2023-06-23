@@ -29,6 +29,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/theme-twilight-css.min.js" integrity="sha512-1KaFBnI7JB8DLsKupTjaCtmkbkbQtUyI9cqvXfp7zjadgoFDtBDJzf2s02MBbytNBHhBHMkNJtYECAy/XSq+EA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/theme-twilight.min.js" integrity="sha512-CQbWpkkaPvt/wFnztAIuDoXvww/t8Ls9p98tRFw241zbd7jO743xfx2T8A48OXOUd7mFrb+iRCRrdwv2XDPHYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/mode-javascript.min.js" integrity="sha512-1OTGICMOnGWxRYfDZRUdv7qut0O8+9s7JPi6JNxlz1pdpHgDwPo1L0dzYKwftuIb0ossdBzWtkAlnyyYpIEp2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/ext-inline_autocomplete.min.js" integrity="sha512-KWHQteimPYdFdjbMwSczVcf60zSSxsItBXmoEVFRYKp0y8Pcb7K/UpVw3v57sUBC2tV7Koqeb6PdMY3IetTiMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/keybinding-sublime.min.js" integrity="sha512-w/39STWW/Z1LblB2XwmGduzCcCPEL1HUi220daoSjYw4d/XsSzSQm+2no518nufpy5mKKTChZ50oQ9YQE/zDNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <div class="navbar bg-base-100">
