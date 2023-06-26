@@ -168,11 +168,26 @@ html > body {
 	font-size: 1.5rem;
 }
 
-#editor {
-    position: absolute;
+#editor1 {
     width: 500px;
     height: 400px;
 }
+
+#editor2 {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    left: 30%;
+}
+
+#editor3 {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    left: 60%;
+}
+
+
 
    
     
