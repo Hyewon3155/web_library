@@ -4,8 +4,8 @@
 <c:set var="pageTitle" value="codeEditor" />
 <%@include file="../common/head.jsp" %>
    <div id="editor3"></div>
-	   <input class="input input-bordered" name="keyword"/>
-	     <button onclick="alerty()">지우기</button>
+    <iframe class="" id="preview-vw" name="preview"></iframe>
+	   <button onclick="alerty()">지우기</button>
 <script>
     
     var editor3 = ace.edit("editor3");
@@ -33,7 +33,11 @@
        
        function alerty(){
     	   var i = editor3.getValue();
-    	   alert(i);
+    	   var _preview = document.getElementById("preview-vw").contentWindow.document;
+           
+    	    _preview.open();
+    	    _preview.write(i);
+    	    _preview.close();
            
        }
        
