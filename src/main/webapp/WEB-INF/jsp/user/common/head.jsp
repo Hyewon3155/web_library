@@ -38,7 +38,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-whitespace.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-beautify.min.js" integrity="sha512-aS/bb/B6ndEFmFUmztWB9RH4XeC2OUNBU5TDfx27D+4kuuSxOvWR3Sb/c9mSOAf2g3ctVpO2lMnjsPhHMrJHiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-command_bar.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-searchbox.min.js" integrity="sha512-iv25ZUQ163BRtpQ/nKLM1wvdr7HlNJu6ei+24AdJv4WiOe2yKeIdYgv8o4k9PfIp2hZiG/M6swbl5dW18FsELA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <div class="navbar bg-base-100">
