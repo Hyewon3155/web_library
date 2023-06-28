@@ -3,53 +3,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="codeEditor" />
 <%@include file="../common/head.jsp" %>
-<div id="editor3"></div>
-<div id="editor2"></div>
-<div id="editor1"></div>
-<script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="src/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
-<script src="src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
-<script src="src/mode-css.js" type="text/javascript" charset="utf-8"></script>
-<script src="src/mode-html.js" type="text/javascript" charset="utf-8"></script>
-<script src="src/ext-inline_autocomplete.js" type="text/javascript" charset="utf-8"></script>
+   <div id="editor3"></div>
+	   <input class="input input-bordered" name="keyword"/>
+	     <button onclick="alerty()">지우기</button>
 <script>
-    var editor1 = ace.edit("editor1");
-    editor1.setTheme("ace/theme/twilight");
-    editor1.setKeyboardHandler("ace/keyboard/sublime");
-    var JavaScriptMode = ace.require("ace/mode/javascript").Mode;
-    editor1.session.setMode(new JavaScriptMode());
-    editor1.setOptions({
-        enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true
-    });
-    editor1.session.setValue("the new text here"); // set value and reset undo history
-
-    
-    var editor2 = ace.edit("editor2");
-    editor2.setTheme("ace/theme/twilight");
-    editor2.setKeyboardHandler("ace/keyboard/sublime");
-    var JavaScriptMode = ace.require("ace/mode/css").Mode;
-    editor2.session.setMode(new JavaScriptMode());
-    editor2.setOptions({
-        enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true
-    });
     
     var editor3 = ace.edit("editor3");
+
     editor3.setTheme("ace/theme/twilight");
     editor3.setKeyboardHandler("ace/keyboard/sublime");
     var JavaScriptMode = ace.require("ace/mode/html").Mode;
     editor3.session.setMode(new JavaScriptMode());
+    ace.require("ace/ext/whitespace");
+    ace.require("ace/ext/command_bar");
+
+    
     editor3.setOptions({
         enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true
-    });
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        autoScrollEditorIntoView: true,
+        copyWithEmptySelection: true
+
+    });  
+       editor3.setShowInvisibles(true); // 화이트스페이스 문자 표시 설정
+       editor3.setValue("the new text here");
+       editor3.session.setUseWrapMode(true);
+       editor3.setHighlightActiveLine(true);
+       
+       function alerty(){
+    	   var i = editor3.getValue();
+    	   alert(i);
+           
+       }
+       
 
 
 
 
 </script>
 
+    
+    
 	
 <%@ include file="../common/foot.jsp" %>
 	

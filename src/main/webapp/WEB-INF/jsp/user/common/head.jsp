@@ -35,6 +35,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/mode-html.min.js" integrity="sha512-q2Qu7dOhudjAQ8wvsLOsZ1NyUhOPAeGL/jzO1f45NMFGSv9F6sgDyzWa00LCVBWg/p84nGM/NHOX4bO1ctbkKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/mode-html_elixir.min.js" integrity="sha512-j9pKHfNUWUCw0Iym0eRhyH+3vuSE3zYU3QqZkTNYErizYZ9xGtCQpJwhycfr5EoRu2fyd4OuMXBlcrp8VkOotw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/mode-html_ruby.min.js" integrity="sha512-KNLgpPha/T5Y3eqV8oWQUDLcxr4tHfLUqhcqFT9aOdd/fB2oGwmd3kYNuWY1P31WBTPuuf++YTkOwQk06ApNDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-whitespace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-beautify.min.js" integrity="sha512-aS/bb/B6ndEFmFUmztWB9RH4XeC2OUNBU5TDfx27D+4kuuSxOvWR3Sb/c9mSOAf2g3ctVpO2lMnjsPhHMrJHiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-command_bar.js"></script>
+
 </head>
 <body>
   <div class="navbar bg-base-100">
