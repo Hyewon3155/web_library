@@ -20,7 +20,7 @@
   <!-- 부트스트랩 아이콘 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="/resource/common.css" />
-  <script src="/resource/common.js" defer="defer"></script>
+  <script src="/resource/common.js" defer="defer"></script>  
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" />
@@ -37,8 +37,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/mode-html_ruby.min.js" integrity="sha512-KNLgpPha/T5Y3eqV8oWQUDLcxr4tHfLUqhcqFT9aOdd/fB2oGwmd3kYNuWY1P31WBTPuuf++YTkOwQk06ApNDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-whitespace.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-beautify.min.js" integrity="sha512-aS/bb/B6ndEFmFUmztWB9RH4XeC2OUNBU5TDfx27D+4kuuSxOvWR3Sb/c9mSOAf2g3ctVpO2lMnjsPhHMrJHiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-command_bar.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-searchbox.min.js" integrity="sha512-iv25ZUQ163BRtpQ/nKLM1wvdr7HlNJu6ei+24AdJv4WiOe2yKeIdYgv8o4k9PfIp2hZiG/M6swbl5dW18FsELA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-elastic_tabstops_lite.min.js" integrity="sha512-qLDPX2lZkfvC7fUhKxAoF4cJzaNVhFsBB5r1bkUHmD84SMGLW30M/Sd7znZKp4TAkTSKM7Q/m0YqVj9SQwIK8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-error_marker.min.js" integrity="sha512-4J/0fXV7jbSwrb4fio0hSnjUgwbQaznUWkeeV/MyVq5O+kFMPDmDOddUJz/Log6cGJ3sCMheo0gvrathVL6Ylg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ext-spellcheck.min.js" integrity="sha512-Qc3XQ58uY9PsSWhlxpUtv5N519ls71EoNWYlDeq/kr+u+/kgwJUVvwfpl66JlKotZE5hc5sqQXfRp+vJ0K9trQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <div class="navbar bg-base-100">

@@ -3,16 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="codeEditor" />
 <%@include file="../common/head.jsp" %>
-   <div id="editor3"></div>
+   <div id="editor3" class="editable"></div>
     <iframe class="" id="preview-vw" name="preview"></iframe>
-   <button onclick="alerty()">지우기</button>
+   <button onclick="alerty()">실행하기</button>
    <button onclick="back()">뒤로</button>
    <button onclick="start()">앞으로</button>
-   <input type="text" id="search-input" placeholder="Search">
-   <button id="search-button">Search</button>
    
 <script>
-    
     var editor3 = ace.edit("editor3");
     var errorContainer = document.getElementById("error-container"); // 오류 메시지를 표시할 요소를 가져옵니다.
 
@@ -22,6 +19,7 @@
     editor3.session.setMode(new JavaScriptMode());
     ace.require("ace/ext/whitespace");
     ace.require("ace/ext/command_bar");
+    
 
     
     editor3.setOptions({
@@ -29,13 +27,22 @@
         enableLiveAutocompletion: true,
         enableSnippets: true,
         autoScrollEditorIntoView: true,
-        copyWithEmptySelection: true
+        copyWithEmptySelection: true,
+        useElasticTabstops: true,
+        spellcheck: true
+        
+
 
     });  
        editor3.setShowInvisibles(true); // 화이트스페이스 문자 표시 설정
        editor3.setValue("the new text here");
        editor3.session.setUseWrapMode(true);
        editor3.setHighlightActiveLine(true);
+       editor3.setShowPrintMargin(true);
+       ace.require("ace/ext/error_marker");
+
+
+
        
        function alerty(){
     	   var i = editor3.getValue();
@@ -55,25 +62,14 @@
            editor3.session.getUndoManager().redo();
        }
        
-       
-       var searchInput = document.getElementById("search-input"); // 검색어를 입력하는 입력 상자 요소를 가져옵니다.
-       var searchButton = document.getElementById("search-button"); // 검색 버튼 요소를 가져옵니다.
+       window.addEventListener('resize', function() {
+    	   editor3.resize();
+    	 });
 
-       // 검색 버튼 클릭 시 검색어를 하이라이트합니다.
-       searchButton.addEventListener("click", function() {
-         var searchValue = searchInput.value; // 입력된 검색어를 가져옵니다.
-         if (searchValue) {
-           editor3.find(searchValue, {
-             skipCurrent: false,
-             wrap: true,
-             caseSensitive: false,
-             wholeWord: false,
-             regExp: false,
-             start: true
-           });
-           editor3.highlight(searchValue);// 검색어를 찾고 하이라이트합니다.
-         }
-       });
+
+       
+       
+
 
 
 
