@@ -9,6 +9,12 @@ html > body {
   font-family: 'SUITE-Regular', monospace;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .main_bg_img {
     position: relative;
     background-image: url("https://img.etoday.co.kr/pto_db/2020/10/20201020035723_1526967_910_340.jpg");                                                               
@@ -168,39 +174,26 @@ html > body {
 	font-size: 1.5rem;
 }
 
-#editor1 {
-    width: 500px;
-    height: 400px;
+  .container {
+  display: flex;
+  height: 80%;
 }
 
-#editor2 {
-    position: absolute;
-    width: 500px;
-    height: 400px;
-    left: 30%;
+#preview-vw, #editor-container{
+	  flex-basis: 50%;
+	  overflow: hidden;
 }
-
-#editor3 {
-    position: absolute;
-    width: 500px;
-    height: 400px;
-    left: 60%;
+ 
+#editor-container {
+	height: 100%;
 }
-
-
- #preview-vw{
-    width: 500px;
-    height: 400px;
-  }
-  
-  div.editable {
-    width: 300px;
-    height: 200px;
-    border: 1px solid #dcdcdc;
-    overflow: auto;
-    resize: both;
-  }
-    
+#editor3, #editor2, #editor1{
+	height: 33.3333333%;
+}
+ #editor3, #editor2, #editor1 {
+	  resize: auto;
+ }
+ 
 
    
     
