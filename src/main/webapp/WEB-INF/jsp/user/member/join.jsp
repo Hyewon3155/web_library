@@ -105,11 +105,7 @@
 
 </script>
 
-
-<h1 class="font-semibold text-2xl text-center pt-5">ROUTINE</h1>
-
-
-<section class="mt-5 flex container mx-auto justify-center">
+<section class="mt-5 flex container mx-auto justify-center overflow-hidden">
   <div class="mx-auto">
    <form action="doJoin" method="POST" onsubmit="join_submitForm(this); return false;">
     <h1 class="block font-semibold mb-2">ID</h1>

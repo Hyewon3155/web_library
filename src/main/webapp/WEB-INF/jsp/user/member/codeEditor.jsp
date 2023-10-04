@@ -5,7 +5,7 @@
 <%@include file="../common/head.jsp" %>
   <div class="container">
      <div id="editor-container">
-           <div class="navbar bg-neutral text-neutral-content flex justify-end" id="button-container">
+      <div class="navbar bg-neutral text-neutral-content flex justify-end" id="button-container">
 	  <button class="btn btn-active" onclick="alerty()">
 	  <i class="bi bi-play"></i>
 	   실행
@@ -22,10 +22,19 @@
 		   <i class="bi bi-save pr-2"></i>
 		   저장
 	  	</button>
-    </div>
+	  	</div>
+	  	<div class="tabs bg-gray-500">
+            <a class="tab tab-lifted text-white">HTML</a> 
+        </div>
 	       <div id="editor3" class="editable"></div>
+	    <div class="tabs bg-gray-500">
+            <a class="tab tab-lifted text-white">CSS</a> 
+        </div>
 		   <div id="editor2" class="editable"></div>
-		   <div id="editor1"></div>
+		<div class="tabs bg-gray-500">
+            <a class="tab tab-lifted text-white">JS</a> 
+        </div>
+		   <div id="editor1"  class="editable"></div>
      </div>
 	  <iframe class="preview" id="preview-vw" name="preview"></iframe>
   </div>
@@ -151,6 +160,9 @@
            editor2.session.getUndoManager().redo();
            editor1.session.getUndoManager().redo();
            
+       }
+       function save(){
+    	   
        }
        
        window.addEventListener('resize', function() {

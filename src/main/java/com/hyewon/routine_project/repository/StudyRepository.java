@@ -16,11 +16,10 @@ public interface StudyRepository {
 					`name` = #{name},
 			        `body` = #{body},
 			        headCount = #{headCount},
-			        file_savedPath = #{file_savedPath},
 			        pw = #{pw}
 			        
 			""")
-	public void createGroup(String host, int headCount, int status, String name, String body, String file_savedPath, String pw);
+	public void createGroup(String host, int headCount, int status, String name, String body, String pw);
 	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();

@@ -66,6 +66,7 @@ public class Rq {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void login(Member member) {
 		httpSession.setAttribute("loginedMemberId", member.getId());

@@ -1,18 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="루틴 그룹 생성" />
 <%@ include file="../common/head.jsp" %>
 <%@ include file="../common/toastUiEditorLib.jsp" %>
  <script>
-      function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-          var preview = document.getElementById("preview-image");
-          preview.src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
-      }
       
 
       function submitForm(form) {
@@ -71,13 +62,6 @@
      	    return;
      	  }
   		 form.body.value = markdown;
-  		 
-  		form.file.value = form.file.value.trim();
-		if (form.file.value.length == 0) {
-			alert('사진을 업로드해주세요');
-			form.file.focus();
-			return;
-    }
   		
   		form.submit();
   	}
@@ -109,17 +93,8 @@
   	
  </script>
 
-  <form action="doWrite"  method="POST" enctype="multipart/form-data" onsubmit="submitForm(this); return false;">
+  <form action="doWrite"  method="POST" onsubmit="submitForm(this); return false;">
      <input type="hidden" name="body" />
-     <div class="flex justify-center">
-      <img id="preview-image" src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" alt="프로필 사진 미리보기" class="w-1/5 mt-3 mb-2 border-2 rounded-full border-none">
-     </div>
-      <div class="flex font-semibold items-center justify-center mb-5">
-        <label for="file" class="flex text-center p-1 cursor-pointer border-2 items-center rounded border-yellow-400 text-yellow-400">
-         <i class="bi bi-image pr-1"></i>사진 선택
-         <input type="file" id="file" name="file" class="hidden" onchange="previewImage(event)"/> 
-        </label>
-      </div>
      <div class="flex justify-center mb-3 mt-3" id="open">
       <h1 class="font-semibold mr-3">공개여부</h1>
       <input type="radio" name="status" value="1" onclick="getCheckboxValue(event)"/>
