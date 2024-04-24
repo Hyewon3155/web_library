@@ -47,35 +47,20 @@
       <label tabindex="0" class="btn btn-ghost btn-circle">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
       </label>
-      <c:if test="${rq.getLoginedMemberId() != 0}">
 	      <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-	        <li><a href="/user/member/mypage">마이페이지</a></li>
-	        <li><a href="/user/member/doLogout">로그아웃</a></li>
-	        <li><a href="/user/group/create">루틴 생성하기</a></li>
-	        <li><a href="/user/member/schedule">내 스케줄보기</a></li>
-	        <li><a href="/user/member/codeEditor">내 코드보기</a></li>
+	        <li><a href="/user/friend/join">친구 등록</a></li>
+	        <li><a href="/user/friend/read">친구 조회</a></li>
+	        <li><a href="/user/book/join">도서 등록</a></li>
+	        <li><a href="/user/book/read">도서 조회</a></li>
+	        <li><a href="/user/loan/read">대출 이력 조회</a></li>
+	        <li><a href="/user/loan/manage">연체자 관리</a></li>
 	      </ul>
-	  </c:if>
     </div>
   </div>
   <div class="navbar-center">
-	  <c:if test="${rq.getLoginedMemberId() == 0  }">
-	    <a class="btn btn-ghost text-2xl" href="/">Routine</a>
-	  </c:if>
-	  <c:if test="${rq.getLoginedMemberId() != 0 }">
-	  	<a class="btn btn-ghost text-2xl" href="/">${rq.loginedMember.nickname } 님의 홈</a>
-	  </c:if>
+	    <a class="btn btn-ghost text-2xl" href="/"><i class="bi bi-book-half mr-2"></i>Library</a>
   </div>
-  <div class="navbar-end">
-     <c:if test="${rq.getLoginedMemberId() == 0  }">
-	     <a class="mr-2" href="/user/member/login">Login</a>
-		 <a class="mr-2" href="/user/member/join">Join</a>
-	 </c:if>
-	 <c:if test="${rq.getLoginedMemberId() != 0 }">
-	     <a class="mr-2" href="/user/member/doLogout">Logout</a>
-	     <a class="mr-2" href="/user/member/mypage">MYPAGE</a>
-     </c:if>
-  </div>
+  <div class="navbar-end"></div>
 </div>
 
   

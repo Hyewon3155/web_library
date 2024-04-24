@@ -1,0 +1,202 @@
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+html > body {
+  font-family: 'SUITE-Regular', monospace;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.main_bg_img {
+    position: relative;
+    background-image: url("https://img.etoday.co.kr/pto_db/2020/10/20201020035723_1526967_910_340.jpg");                                                               
+    height: 100vh;
+    background-size: cover;
+}
+
+.img-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.4);                                                                 
+}
+
+
+.main_bg_img .content{
+     position: absolute;
+     top:50%;
+     left:50%;
+     transform: translate(-50%, -50%);                                                                   
+     font-size:2.5rem;
+     color: white;
+     z-index: 2;
+     text-align: center;
+}
+
+.slide-in {
+  animation: change 5s ease-out alternate;
+  animation-iteration-count: 3;
+}
+
+@keyframes change {
+  from {
+    transform: translateX(100%);
+    visibility: visible;
+  }
+  
+}
+
+  to {
+    transform: translateX(0%);
+  }
+
+.login_bg_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     min-height: 100vh;
+    align-items: center;
+    background-color: #ffdab9;
+    background-size: cover;
+}
+
+ .modal-exam, .popUp-exam {
+	font-size: 2rem;
+}
+
+.layer-bg, .layer_change {
+	display: none;
+	z-index:1;
+}
+
+.layer-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, .6);
+}
+
+.layer_change {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:translateX(-50%) translateY(-50%);
+	background-color: white;
+	color: white;
+	width: 500px;
+	height: 500px;
+	border-radius: 1rem;
+}
+
+.layer_add {
+	display:none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:translateX(-50%) translateY(-50%);
+	background-color: white;
+	color: white;
+	width: 500px;
+	height: 500px;
+	border-radius: 1rem;
+	z-index: 1;
+}
+
+.layer_delete {
+	display:none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:translateX(-50%) translateY(-50%);
+	background-color: white;
+	color: white;
+	width: 500px;
+	height: 500px;
+	border-radius: 1rem;
+	z-index: 1;
+}
+
+.layer_modify {
+	display:none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:translateX(-50%) translateY(-50%);
+	background-color: white;
+	color: white;
+	width: 500px;
+	height: 500px;
+	border-radius: 1rem;
+	z-index: 1;
+}
+
+.layer_change > h1 {
+	padding: 20px;
+	font-size: 1.5rem;
+}
+
+.layer_change > div {
+	margin: 20px;
+}
+
+#close {
+	position: absolute;	
+	bottom: 20px;
+	right:20px;
+}
+
+#modify, #add, #delete{
+	font-size: 1.2rem;
+}
+
+
+.close-x-btn, .add-close-x-btn, .modify-close-x-btn, .delete-close-x-btn {
+	font-size: 4rem;
+	color: black;
+	position: absolute;
+	top: -10px;;
+	right: 20px;
+	cursor: pointer;
+}
+
+.layer_add, .layer_delete, .layer_modify > h1 {
+	padding: 20px;
+	font-size: 1.5rem;
+}
+
+  .container {
+  display: flex;
+  height: 90%;
+}
+
+#preview-vw, #editor-container{
+	  flex-basis: 50%;
+	  overflow: hidden;
+}
+ 
+#editor-container {
+	height: 100%;
+}
+#editor3, #editor2, #editor1{
+	height:30%;
+}
+ #editor3, #editor2, #editor1 {
+	  resize: auto;
+ }
+ 
+
+   
+    
+    
+    
+    

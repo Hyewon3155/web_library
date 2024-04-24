@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 spring:
   servlet:
     multipart:
@@ -21,22 +21,16 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   datasource:
-   primary:
-    url: jdbc:mariadb://kho3155.cafe24.com:3306/kho3155
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: kho3155
-    password: Lucybeauty12!
-  secondary:
-    url: jdbc:mariadb://localhost:3306/kho3155
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: kho3155
-    password: Lucybeauty12!
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3305/book?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
+    username: root
+    password: 
 mybatis:
-  type-aliases-package: com.hyewon.routine_project.vo
+  type-aliases-package: com.hyewon.libaray.vo
 custom:
-  siteName: ROUTINE
+  siteName: LIBRARY
   siteMainUri: http://localhost:8080
   emailFrom: no-reply@localhost
-  emailFromName: ROUTINE
+  emailFromName: LIBRARY
 file:
   dir: C:\KHW\workspace\routine_project\group_profile

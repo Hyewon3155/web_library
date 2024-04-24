@@ -1,0 +1,42 @@
+server:
+  port: 22
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mailtestcjh@gmail.com
+    password: xohvhfpztqxdzaqo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  datasource:
+   primary:
+    url: jdbc:mariadb://kho3155.cafe24.com:3306/kho3155
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: kho3155
+    password: Lucybeauty12!
+  secondary:
+    url: jdbc:mariadb://localhost:3306/kho3155
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: kho3155
+    password: Lucybeauty12!
+mybatis:
+  type-aliases-package: com.hyewon.routine_project.vo
+custom:
+  siteName: ROUTINE
+  siteMainUri: http://localhost:8080
+  emailFrom: no-reply@localhost
+  emailFromName: ROUTINE
+file:
+  dir: C:\KHW\workspace\routine_project\group_profile

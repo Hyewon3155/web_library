@@ -17,7 +17,7 @@ html, body {
 
 .main_bg_img {
     position: relative;
-    background-image: url("https://img.etoday.co.kr/pto_db/2020/10/20201020035723_1526967_910_340.jpg");                                                               
+    background-image: url("https://media.istockphoto.com/id/949118068/ko/%EC%82%AC%EC%A7%84/%EB%8F%84%EC%84%9C%EB%8A%94.jpg?s=612x612&w=0&k=20&c=YDGPQQMQivmHg07-qdUiYgFF3cr3q4-7YTSkcVAS5m8=");
     height: 100vh;
     background-size: cover;
 }
@@ -194,7 +194,38 @@ html, body {
 	  resize: auto;
  }
  
+.table-box-type-1 > table {
+	width: 100%;
+}
 
+.table-box-type-1 > table th, .table-box-type-1 > table td {
+	border:1px solid black;
+	padding: 10px;
+	text-align: center;
+	
+}
+
+.horizontal-border-only {
+    border-collapse: collapse;
+}
+
+.horizontal-border-only th{
+	 border-left: none;
+    border-right: none;
+}
+
+.horizontal-border-only td {
+    border-left: none;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    
+}
+
+
+.horizontal-border-only tr:last-child th,
+.horizontal-border-only tr:last-child td {
+    border-bottom: 2px solid white;
+}
    
     
     
