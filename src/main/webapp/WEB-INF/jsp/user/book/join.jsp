@@ -59,10 +59,10 @@
             <input type="text" name="publisher" class="input input-bordered w-full p-2 mb-10 border rounded" placeholder="출판사를 입력해주세요">
          
           <label for="type" class="block mb-2 text-base font-bold text-xl">전공 여부</label>
-         <select class="input input-bordered w-full p-2 mb-10 border rounded select" name="type"> <!-- 너비와 높이를 지정합니다. -->
-                        <option disabled selected>전공 여부</option>
-                        <option value="전공">전공</option>
-                       <option value="비전공">비전공</option>
+         <select class="input input-bordered w-full p-2 mb-10 border rounded select" name="type" id="type"> <!-- 너비와 높이를 지정합니다. -->
+                        <option disabled selected value="">전공 여부</option>
+                        <option value="1">전공</option>
+                       <option value="0">비전공</option>
          </select>
       <button class="btn w-full p-2 border rounded btn-success font-bold text-base mt-10 text-white">도서 등록</button> 
       </form>    

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyewon.library.repository.BookRepository;
+import com.hyewon.library.vo.ResultData;
 
 @Service
 public class BookService {
@@ -15,12 +16,13 @@ public class BookService {
 		this.bookRepository = bookRepository;
 	}
 	
-	public void createGroup(String host, int headCount, int status, String name, String body, String pw) {
-		bookRepository.createGroup(host, headCount, status, name, body, pw);
-	}
 	
 	public int getLastInsertId() {
 		return bookRepository.getLastInsertId();
+	}
+
+	public void doJoin(String title, String author, String publisher, String type) {
+		bookRepository.doJoin(title, author, publisher, type);
 	}
 	
 

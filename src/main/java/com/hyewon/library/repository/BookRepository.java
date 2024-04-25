@@ -4,25 +4,24 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.hyewon.library.vo.ResultData;
+
 @Mapper
 public interface BookRepository {
-	
 	@Insert("""
-			INSERT INTO study
-				SET regDate = NOW(),
-					updateDate = NOW(),
-					`host` = #{host},
-					`status` = #{status},
-					`name` = #{name},
-			        `body` = #{body},
-			        headCount = #{headCount},
-			        pw = #{pw}
+			INSERT INTO books
+				SET title = #{title},
+					author = #{author},
+					publisher = #{publisher},
+			        `type` = #{type}
 			        
 			""")
-	public void createGroup(String host, int headCount, int status, String name, String body, String pw);
+	public void doJoin(String title, String author, String publisher, String type);
 	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
+
+	
 
 
 	
