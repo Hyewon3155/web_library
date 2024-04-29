@@ -3,19 +3,114 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="도서 조회" />
 <%@ include file="../common/head.jsp" %>
+<script>
+function searchBook(){
+    var searchKeyword = document.getElementById('searchKeyword').value;
+    var searchKeywordType = document.getElementById('searchKeywordType').value;
+
+    $.get('searchBook', {
+        searchKeywordType : searchKeywordType,
+        searchKeyword : searchKeyword,
+    }, function(data) {
+        if (data.success) {
+            var tableContent = "";
+
+             // c:forEach 대체
+             data.data1.forEach(function(book, index) {
+		    	 var statusCellContent = "";
+		    	 var typeCellContent = "";
+
+            	 if (book.type === "0") {
+            	     typeCellContent = '<td>비전공</td>';
+            	 } else if (book.type === "1") {
+            	     typeCellContent = '<td>전공</td>';
+            	 } else {
+		    	     typeCellContent = '<td></td>';
+		    	 }
+
+            	 if (book.status === "0") {
+            	     statusCellContent = '<td><button class="btn btn-info">대출</button></td>';
+            	 } else if (book.status === "1") {
+            	     statusCellContent = '<td class="text-red-600 font-bold">대출중</td>';
+            	 } else {
+		    	     statusCellContent = '<td></td>';
+		    	   }
+            	 
+            	 tableContent += "<tr><td>" + (index + 1) + "</td><td>" + book.title + "</td><td>" + book.author + "</td><td>" + book.publisher + "</td>" + typeCellContent + statusCellContent;
+
+
+            	 tableContent += "<td><a href='modify?id=" + book.id + "'><button class='btn btn-warning'>수정</button></a></td><td><a href='delete?id=" + book.id + "'><button class='btn btn-error'>삭제</button></a></td></tr>";
+
+             });
+
+             $("#tableBodyId").html(tableContent);
+         } else {
+             alert(data.msg);
+         }
+    }, 'json');
+}
+function openModal() {
+	$('.layer_change').show();
+	$('.close-btn').click(function(){
+		$('.layer-bg').hide();
+		$('.layer_change').hide();
+//		$('.layer-bg, .layer').css('display', 'none');
+	})
+	$('.close-x-btn').click(function(){
+		$('.layer-bg').hide();
+		$('.layer_change').hide();
+//		$('.layer-bg, .layer').css('display', 'none');
+	})
+	$('.add-back-btn').click(function(){
+		$('.layer_add').hide();
+//		$('.layer-bg, .layer').css('display', 'none');
+	})
+	$('.add-close-x-btn').click(function(){
+		$('.layer_add').hide();
+//		$('.layer-bg, .layer').css('display', 'none');
+	})
+}
+
+	// 모달 창을 닫기 위한 함수
+function closeModal() {
+	  var modal = document.getElementById("myModal");
+	  modal.style.display = "none";
+}
+
+	// 모달 창 바깥을 클릭하면 닫히도록 설정
+window.onclick = function(event) {
+	  var modal = document.getElementById("myModal");
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	 }
+}
+</script>
 <nav class="flex justify-center items-center mt-20 flex-col">
-            <div class="border-blue-400 border-4 flex">
-                  <select data-value="${searchKeywordType}" class="join-item h-20 text-l select" name="searchKeywordType"> <!-- 너비와 높이를 지정합니다. -->
+<div class="layer-bg" class="modal" id="myModal"></div>
+	<div class="layer_change shadow-2xl">
+		<h1 class="text-gray-400">친구 검색</h1>
+		<span class="close-x-btn">&times;</span>
+		<div class="border-blue-400 border-4 flex">
+                  <select data-value="${searchKeywordType}" class="join-item h-10 text-l select" name="searchKeywordType" id="searchKeywordType"> <!-- 너비와 높이를 지정합니다. -->
                         <option disabled selected>검색 조건</option>
-                        <option value="이름">이름</option>
                        <option value="제목">제목</option>
                         <option value="저자">저자</option>
                        <option value="출판사">출판사</option>
-                       <option value="전공 여부">전공 여부</option>
-                        <option value="대출 여부">대출 여부</option>
                     </select>
-                    <input class="input join-item w-full h-20 text-xl" name="searchKeyword" placeholder="검색어를 적어주세요"/> <!-- 너비와 높이를 지정합니다. -->
-                <button class="join-item h-20 w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchWork();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
+                    <input class="input join-item w-full text-xl" name="searchKeyword" placeholder="검색어를 적어주세요" id="searchKeyword"/> <!-- 너비와 높이를 지정합니다. -->
+                <button class="join-item w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchBook();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
+            </div>
+		<button class="close-btn btn btn-active" id="close">CLOSE</button>				
+    </div>
+            <div class="border-blue-400 border-4 flex">
+                  <select data-value="${searchKeywordType}" class="join-item h-20 text-l select" name="searchKeywordType" id="searchKeywordType"> <!-- 너비와 높이를 지정합니다. -->
+                        <option disabled selected>검색 조건</option>
+                       <option value="제목">제목</option>
+                        <option value="저자">저자</option>
+                       <option value="출판사">출판사</option>
+                    </select>
+                    <input class="input join-item w-full h-20 text-xl" name="searchKeyword" placeholder="검색어를 적어주세요" id="searchKeyword"/> <!-- 너비와 높이를 지정합니다. -->
+                <button class="join-item h-20 w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchBook();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
             </div>
             <div class="table-box-type-1 w-8/12 mt-10">
 				<table class="table">
@@ -43,12 +138,26 @@
 						</tr>
 					</thead>
 					<tbody id="tableBodyId">
-						<c:forEach  items="${references}" var="reference">
+						<c:forEach  items="${books}" var="book" varStatus="status">
 							<tr>
-								<td>${reference.id}</td>
-								<td><a class="hover:underline" href="referenceDetail?id=${reference.id }&project_id=${project_id}">${reference.title }</a></td>
-								<td>${reference.regDate.substring(2, 16) }</td>
-								<td>${reference.writerName }</td>
+								<td>${status.index + 1}</td>
+								<td>${book.title }</td>
+								<td>${book.author}</td>
+								<td>${book.publisher }</td>
+								<c:if test="${book.type eq 0}">
+								    <td>비전공</td>
+								</c:if>
+								<c:if test="${book.type eq 1}">
+								    <td>전공</td>
+								</c:if>
+								<c:if test="${book.status eq 0}">
+									<td><button class="btn btn-info" onclick="openModal();">대출</button></td>
+								</c:if>
+								<c:if test="${book.status eq 1}">
+									<td class="text-red-600 font-bold">대출중</td>
+								</c:if>
+								<td><a href="modify?id=${book.id }"><button class="btn btn-warning">수정</button></a></td>
+								<td><a href="delete?id=${book.id }"><button class="btn btn-error">삭제</button></a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

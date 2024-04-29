@@ -1,153 +1,77 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="루틴 그룹 생성" />
+<c:set var="pageTitle" value="도서 수정" />
 <%@ include file="../common/head.jsp" %>
-<%@ include file="../common/toastUiEditorLib.jsp" %>
- <script>
-      function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-          var preview = document.getElementById("preview-image");
-          preview.src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
-      }
+<script>
       
+      function join_submitForm(form) {
+    	  form.title.value = form.title.value.trim();
+	  	  if (form.title.value.length == 0) {
+	  			alert('도서명을 입력해주세요');
+	  			form.title.focus();
+	  			return;
+	      }
+    	
+  		form.author.value = form.author.value.trim();
+  		if (form.author.value.length == 0) {
+  			alert('저자명을 입력해주세요');
+  			form.author.focus();
+  			return;
+  		}
+  		
+  		form.publisher.value = form.publisher.value.trim();
+  		if (form.publisher.value.length == 0) {
+  			alert('출판사를 입력해주세요');
+  			form.publisher.focus();
+  			return;
+  		}
+  		
+  		let type = $('#type').val();
 
-      function submitForm(form) {
-    	  
-        
+        if(!type){
+            alert("전공 여부를 선택해주세요.");
+            $('#type').focus();
+            return false;
+        }
   		
-  		form.status.value = form.status.value.trim();
-  		if (form.status.value.length == 0) {
-  			alert('공개 여부를 설정해주세요');
-  			form.status.focus();
-  			return;
-  		}
-  		
-  		if(form.status.value == 2 && pw == null) {
-			alert('비밀번호를 설정해주세요');
-			form.pw.focus();
-			return;
-		}
-  		
-  		form.headCount.value = form.headCount.value.trim();
-  		if (form.headCount.value.length == 0) {
-  			alert('정원을 설정해주세요');
-  			form.headCount.focus();
-  			return;
-  		}
-  		if(form.headCount.value <= 1){
-  			alert('정원은 2명부터 가능합니다');
-  		    form.headCount.focus();
-  		    return;
-  		}
-  		
-  		form.name.value = form.name.value.trim();
-  		if (form.name.value != form.name.value) {
-  			alert('그룹 이름을 입력해주세요');
-  			form.name.focus();
-  			return;
-  		}
-  		
-  		form.name.value = form.name.value.trim();
-  		if (form.name.value.length == 0) {
-  			alert('이름을 입력해주세요');
-  			form.name.focus();
-  			return;
-  		}
-  		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
-  		console.log(editor);
-  	     // editor라는 변수에 form에서 .toast-ui-editor의 데이터를 찾아줌
-  	     // 이건 body에서 확인할 수 없기 때문에 form에 있는 toast-ui의 입력받은 값을 확인해주는 용도
-  	  
-  	    const markdown = editor.getMarkdown().trim();
-  		console.log(markdown);
-  	  
-  		 if (markdown.length == 0) {
-     	    alert('소개글을 입력해주세요');
-     	    editor.focus();
-     	    return;
-     	  }
-  		 form.body.value = markdown;
-  		 
-  		form.file.value = form.file.value.trim();
-		if (form.file.value.length == 0) {
-			alert('사진을 업로드해주세요');
-			form.file.focus();
-			return;
-    }
   		
   		form.submit();
   	}
-      var i = 0;
-      function getCheckboxValue(event)  {
-    	  if(event.target.value == 2)  {
-    		  if(i >= 1){
-    		  }
-    		  else {
-    			  let replyContent = $("#open");
-    				
-    		      let addHtml = `<div class="flex justify-center items-center" id="pw_div">
-    				               	<h1 class="font-semibold">비밀번호</h1>
-    				               	<input class="input input-bordered w-1/4 mb-2 items-center mr-4 ml-2" type="text" name="pw" placeholder="비밀번호를 설정해주세요" />
-    	                           </div>
-    				               `;
-    	   
-    	          replyContent.after(addHtml);
-    	          i++;
-    		  }
-            
-    	  }
-    	  
-    	  if(event.target.value == 1) {
-        	 $("#pw_div *").remove();
-        	 i=0;
-    	  }   
-     }
-  	
- </script>
+</script>
+<style>
+	body {
+		height: 100%;
+	}
+</style>
+<nav class="bg-gray-200 py-20">
+    <div class="max-w-2xl mx-auto bg-white p-10 rounded-lg shadow-md">
+        <h1 class="text-2xl mb-4">도서 수정</h1>
+           <form action="doModify" method="POST" onsubmit="join_submitForm(this); return false;">
+           <input type="hidden" name="id" value="${book.id }"/>
+            <label for="title" class="block mb-2 text-base font-bold text-xl">도서명</label>
+            <input type="text" name="title" class="input input-bordered w-full p-2 mb-10 border rounded" placeholder="도서명을 입력해주세요" value="${book.title }">
 
-  <form action="doWrite"  method="POST" enctype="multipart/form-data" onsubmit="submitForm(this); return false;">
-     <input type="hidden" name="body" />
-     <div class="flex justify-center">
-      <img id="preview-image" src="https://i0.wp.com/adventure.co.kr/wp-content/uploads/2020/09/no-image.jpg" alt="프로필 사진 미리보기" class="w-1/5 mt-3 mb-2 border-2 rounded-full border-none">
-     </div>
-      <div class="flex font-semibold items-center justify-center mb-5">
-        <label for="file" class="flex text-center p-1 cursor-pointer border-2 items-center rounded border-yellow-400 text-yellow-400">
-         <i class="bi bi-image pr-1"></i>사진 선택
-         <input type="file" id="file" name="file" class="hidden" onchange="previewImage(event)"/> 
-        </label>
-      </div>
-     <div class="flex justify-center mb-3 mt-3" id="open">
-      <h1 class="font-semibold mr-3">공개여부</h1>
-      <input type="radio" name="status" value="1" onclick="getCheckboxValue(event)"/>
-		&nbsp;공개
-	    &nbsp;&nbsp;
-	   <input type="radio" name="status" value="2" onclick="getCheckboxValue(event)"/>
-		&nbsp;비공개
-	</div>
-	<div class="flex justify-center items-center">
-    <h1 class="font-semibold">인원</h1>
-    <input type="number" name="headCount" class="input input-bordered w-1/10 mx-2 mb-2" placeholder="인원수를 선택하세요"/>명
-    </div>
-    <div class="flex justify-center items-center">
-      <h1 class="font-semibold">이름</h1>
-      <input class="input input-bordered w-2/4 ml-2" type="text" name="name" placeholder="루틴 이름을 입력해주세요" />
-    </div>
-    <div class="w-3/4 mx-auto">
-      <h1 class="font-semibold">소개글</h1>
-      <div class="toast-ui-editor bg-white">
-        <script type="text/x-template"></script>
-      </div>
-    </div>
-    <div class="mt-2 mx-auto text-center w-3/4">
-       <button class="p-1 cursor-pointer border-2 rounded text-yellow-400 border-yellow-400 w-full">업로드</button>
-    </div>
-  </form>
-  <div class="mt-2 w-3/4 mx-auto">
-    <div class="flex jusify-evenly btns">
-	    <button class="btn-text-link btn btn-active " type="button" onclick="history.back();">뒤로가기</button>
-    </div>
-  </div>
+            <label for="author" class="block mb-2 text-base font-bold text-xl">저자</label>
+            <input type="text" name="author" class="input input-bordered w-full p-2 mb-10 border rounded" placeholder="저자를 입력해주세요" value="${book.author }">
+            
+            <!-- 설명 -->
+            <label for="publisher" class="block mb-2 text-base font-bold text-xl">출판사</label>
+            <input type="text" name="publisher" class="input input-bordered w-full p-2 mb-10 border rounded" placeholder="출판사를 입력해주세요" value="${book.publisher }">
+         
+          <label for="type" class="block mb-2 text-base font-bold text-xl">전공 여부</label>
+         <select class="input input-bordered w-full p-2 mb-10 border rounded select" name="type" id="type">
+                        <c:if test="${book.type eq 0}">
+                        	<option selected value="0">비전공</option>
+						</c:if>
+						<c:if test="${book.type eq 1}">
+                        	<option selected value="1">전공</option>
+						</c:if>
+                        <option value="1">전공</option>
+                       <option value="0">비전공</option>
+         </select>
+      <button class="btn w-full p-2 border rounded btn-success font-bold text-base mt-10 text-white">도서 수정</button> 
+      </form>    
+</div>
+</nav>
 <%@ include file="../common/foot.jsp" %>

@@ -4,8 +4,8 @@
 <c:set var="pageTitle" value="친구 상세 정보 조회" />
 <%@ include file="../common/head.jsp" %>
 <style>
-	nav {
-		height: 93%;
+	body {
+		height: 100%;
 	}
 </style>
 <nav class="bg-gray-200 py-20">
