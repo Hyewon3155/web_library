@@ -60,6 +60,12 @@ public class BookService {
 	public void doModify(int id, String title, String author, String publisher, String type) {
 		bookRepository.doModify(id, title, author, publisher, type);
 	}
+
+
+	public void doLoan(int bookId) {
+		bookRepository.doLoan(bookId);
+		
+	}
 	
 
 }

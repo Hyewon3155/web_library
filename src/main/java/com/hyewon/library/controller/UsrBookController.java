@@ -9,16 +9,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyewon.library.service.BookService;
+import com.hyewon.library.service.FriendService;
+import com.hyewon.library.service.LoanService;
 import com.hyewon.library.util.Util;
 import com.hyewon.library.vo.Book;
+import com.hyewon.library.vo.Friend;
 import com.hyewon.library.vo.ResultData;
 
 @Controller
 public class UsrBookController {
 	private BookService bookService;
+	private FriendService friendService;
+	private LoanService loanService;
 	
-	public UsrBookController(BookService bookService) {
+	public UsrBookController(BookService bookService, FriendService friendService, LoanService loanService) {
 		this.bookService = bookService;
+		this.friendService = friendService;
+		this.loanService = loanService;
 	}
 	
 	@RequestMapping("/user/book/join")
@@ -53,7 +60,9 @@ public class UsrBookController {
 	@RequestMapping("/user/book/read")
 	public String showRead(Model model) {
 		List<Book> books = bookService.getBooks();
+		List<Friend> friends = friendService.getFriends();
 		model.addAttribute("books", books);
+		model.addAttribute("friends", friends);
 		return "user/book/read";
 	}
 	
@@ -91,6 +100,7 @@ public class UsrBookController {
 	@ResponseBody
 	public String delete(int id) {
 
+        loanService.deleteByBookId(id);
         bookService.deleteById(id);
         	
 		return Util.jsReplace("삭제되었습니다", "read");
@@ -134,6 +144,41 @@ public class UsrBookController {
 
 		return "user/book/detail";
 	}
+	
+	@RequestMapping("/user/book/searchFriend")
+	@ResponseBody
+	public ResultData searchFriend(@RequestParam(defaultValue = "") String searchKeywordType,
+	        @RequestParam(defaultValue = "") String searchKeyword) {
+	    
+	    if (Util.empty(searchKeywordType)) {
+	        return ResultData.from("F-1", "검색 조건을 설정해주세요");
+	    }
+	    if (Util.empty(searchKeyword)) {
+	        return ResultData.from("F-1", "검색어를 입력해주세요");
+	    }
+	    
+	    List<Friend> friends = null;
+	    if ("이름".equals(searchKeywordType)) {
+	        friends = friendService.getMemberByName(searchKeyword);
+
+	    } else if ("소속".equals(searchKeywordType)) {
+	        friends = friendService.getMemberBySchool(searchKeyword);
+
+	    } else if ("전화번호".equals(searchKeywordType)) {
+	        friends = friendService.getMemberByPhone(searchKeyword);
+
+	    } else if ("이메일".equals(searchKeywordType)) {
+	        friends = friendService.getMemberByEmail(searchKeyword);
+
+	    }
+	    
+	    if (friends == null || friends.isEmpty()) {
+	        return ResultData.from("F-2", "존재하지 않는 회원입니다");
+	    }
+	    
+	    return ResultData.from("S-1", "", "friends", friends);
+	}
+
 	
 
 }

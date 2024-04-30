@@ -49,8 +49,10 @@ function searchBook(){
          }
     }, 'json');
 }
-function openModal() {
+function openModal(bookId) {
 	$('.layer_change').show();
+	$('#modal-book-id').val(bookId);
+
 	$('.close-btn').click(function(){
 		$('.layer-bg').hide();
 		$('.layer_change').hide();
@@ -84,24 +86,104 @@ window.onclick = function(event) {
 	    modal.style.display = "none";
 	 }
 }
+	
+function searchFriend(){
+    var searchKeyword = document.getElementById('searchFriendKeyword').value;
+    var searchKeywordType = document.getElementById('searchFriendKeywordType').value;
+
+    $.get('searchFriend', {
+        searchKeywordType : searchKeywordType,
+        searchKeyword : searchKeyword,
+    }, function(data) {
+        if (data.success) {
+            var tableContent = "";
+
+             // c:forEach 대체
+             data.data1.forEach(function(friend, index) {
+            	 tableContent += "<input type='hidden' value='${friend.id}'/><tr class='text-black'><td>" + (index + 1) + "</td><td><button onclick='confirmLoan(" + $('#modal-book-id').val() + ", " + friend.id + ");' class='text-blue-800 underline font-bold'>" + friend.name + "</button></td><td>" + friend.school + "대학교 " + friend.depart + "과" + "</td><td>" + friend.cellphoneNum + "</td><td>" + friend.email + "</td></tr>";
+
+             });
+
+             $("#tableFriendId").html(tableContent);
+         } else {
+             alert(data.msg);
+         }
+    }, 'json');
+    
+  
+}	
+function confirmLoan(bookId, friendId) {
+    if (confirm("대출하시겠습니까?")) {
+        // 대출 처리 로직 작성
+        $.post('loanBook', {
+        	bookId: bookId,
+            friendId: friendId
+        }, function(data) {
+            if (data.success) {
+                alert(data.msg);
+                window.location.reload();
+            } else {
+                alert("대출에 실패하였습니다.");
+            }
+        }, 'json');
+    } else {
+    	return;
+    }
+}
+
 </script>
 <nav class="flex justify-center items-center mt-20 flex-col">
 <div class="layer-bg" class="modal" id="myModal"></div>
-	<div class="layer_change shadow-2xl">
-		<h1 class="text-gray-400">친구 검색</h1>
-		<span class="close-x-btn">&times;</span>
-		<div class="border-blue-400 border-4 flex">
-                  <select data-value="${searchKeywordType}" class="join-item h-10 text-l select" name="searchKeywordType" id="searchKeywordType"> <!-- 너비와 높이를 지정합니다. -->
-                        <option disabled selected>검색 조건</option>
-                       <option value="제목">제목</option>
-                        <option value="저자">저자</option>
-                       <option value="출판사">출판사</option>
-                    </select>
-                    <input class="input join-item w-full text-xl" name="searchKeyword" placeholder="검색어를 적어주세요" id="searchKeyword"/> <!-- 너비와 높이를 지정합니다. -->
-                <button class="join-item w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchBook();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
-            </div>
-		<button class="close-btn btn btn-active" id="close">CLOSE</button>				
+<div class="layer_change shadow-2xl">
+    <h1 class="text-gray-400">친구 검색</h1>
+    <span class="close-x-btn">&times;</span>
+    <div class="border-blue-400 border-4 flex">
+    <input type="hidden" id="modal-book-id" />
+        <select data-value="${searchKeywordType}" class="join-item h-10 text-l select text-black" name="searchFriendKeywordType" id="searchFriendKeywordType">
+            <option disabled selected>검색 조건</option>
+            <option value="이름">이름</option>
+            <option value="소속">소속</option>
+            <option value="전화번호">전화번호</option>
+            <option value="이메일">이메일</option>
+        </select>
+        <input class="input join-item w-full text-xl text-black" name="searchFriendKeyword" placeholder="검색어를 적어주세요" id="searchFriendKeyword"/>
+        <button class="join-item w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchFriend();">검색</button>
     </div>
+    <div class="table-box-type-1 mt-10">
+        <table class="table">
+            <colgroup>
+                <col style="width: 20%;"/>
+                <col style="width: 20%;"/>
+                <col style="width: 20%;"/>
+                <col style="width: 20%;"/>
+                <col style="width: 20%;"/>
+            </colgroup>
+            <thead>
+                <tr class="text-black">
+                    <th class="text-lg">번호</th>
+                    <th class="text-lg">이름</th>
+                    <th class="text-lg">소속</th>
+                    <th class="text-lg">전화번호</th>
+                    <th class="text-lg">이메일</th>
+                </tr>
+            </thead>
+            <tbody id="tableFriendId">
+                <c:forEach items="${friends}" var="friend" varStatus="status">
+                <input type="hidden" value="${friend.id }"/>
+                    <tr class="text-black">
+                        <td>${status.index + 1}</td>
+                        <td><button onclick="confirmLoan($('#modal-book-id').val(), ${friend.id});" class="text-blue-800 underline font-bold">${friend.name}</button></td>
+                        <td>${friend.school }대학교 ${friend.depart }과</td>
+                        <td>${friend.cellphoneNum }</td>
+                        <td>${friend.email }</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    <button class="close-btn btn btn-active" id="close">CLOSE</button>               
+</div>
+
             <div class="border-blue-400 border-4 flex">
                   <select data-value="${searchKeywordType}" class="join-item h-20 text-l select" name="searchKeywordType" id="searchKeywordType"> <!-- 너비와 높이를 지정합니다. -->
                         <option disabled selected>검색 조건</option>
@@ -151,7 +233,7 @@ window.onclick = function(event) {
 								    <td>전공</td>
 								</c:if>
 								<c:if test="${book.status eq 0}">
-									<td><button class="btn btn-info" onclick="openModal();">대출</button></td>
+									<td><button class="btn btn-info" onclick="openModal(${book.id});">대출</button></td>
 								</c:if>
 								<c:if test="${book.status eq 1}">
 									<td class="text-red-600 font-bold">대출중</td>

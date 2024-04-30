@@ -76,6 +76,14 @@ public interface BookRepository {
 			""")
 	public void doModify(int id, String title, String author, String publisher, String type);
 
+	@Update("""
+			UPDATE books
+				SET `status` = "1"
+			 WHERE id = #{bookId}
+			        
+			""")
+	public void doLoan(int bookId);
+
 	
 
 

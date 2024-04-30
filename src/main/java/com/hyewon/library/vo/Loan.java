@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Loan {
 	private int id;
-	private String loandDate;
+	private String title;
+	private String friendName;
+	private String loanDate;
 	private String returnDate;
 	private String returnDueDate;
 	private int friend_id;
