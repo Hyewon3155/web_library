@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyewon.library.service.BookService;
 import com.hyewon.library.service.LoanService;
+import com.hyewon.library.util.Util;
+import com.hyewon.library.vo.Friend;
 import com.hyewon.library.vo.Loan;
 import com.hyewon.library.vo.ResultData;
 
@@ -40,6 +42,51 @@ public class UsrLoanController {
 		List<Loan> loans = loanService.getLoans();
 		model.addAttribute("loans", loans);
 		return "user/loan/read";
+	}
+	
+	@RequestMapping("/user/loan/doReturn")
+	@ResponseBody
+	public ResultData doReturn(@RequestParam int loanId) {
+		loanService.doReturn(loanId);
+		loanService.changeStatus(loanId);
+	    return ResultData.from("S-1", "반납되었습니다.");
+	}
+	
+	@RequestMapping("/user/loan/searchLoan")
+	@ResponseBody
+	public ResultData searchLoan(@RequestParam(defaultValue = "") String searchKeywordType,
+	        @RequestParam(defaultValue = "") String searchKeyword) {
+	    
+	    if (Util.empty(searchKeywordType)) {
+	        return ResultData.from("F-1", "검색 조건을 설정해주세요");
+	    }
+	    if (Util.empty(searchKeyword)) {
+	        return ResultData.from("F-1", "검색어를 입력해주세요");
+	    }
+	    
+	    List<Loan> loans = null;
+	    if ("책 제목".equals(searchKeywordType)) {
+	        loans = loanService.getLoanByTitle(searchKeyword);
+
+	    } else if ("대출자".equals(searchKeywordType)) {
+	        loans = loanService.getLoanByFriendName(searchKeyword);
+
+	    } else if ("대출일자".equals(searchKeywordType)) {
+	        loans = loanService.getLoanByLoanDate(searchKeyword);
+
+	    } else if ("반납일자".equals(searchKeywordType)) {
+	        loans = loanService.getLoanByReturnDate(searchKeyword);
+
+	    } else if ("반납예정일".equals(searchKeywordType)) {
+	        loans = loanService.getLoanByReturnDueDate(searchKeyword);
+
+	    }
+	    
+	    if (loans == null || loans.isEmpty()) {
+	        return ResultData.from("F-2", "해당 대출 이력이 없습니다");
+	    }
+	    
+	    return ResultData.from("S-1", "", "loans", loans);
 	}
 
 	@RequestMapping("/user/loan/manage")

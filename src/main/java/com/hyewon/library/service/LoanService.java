@@ -39,5 +39,42 @@ public class LoanService {
 	public List<Loan> getLoans() {
 		return loanRepository.getLoans();
 	}
+
+
+	public void doReturn(int loanId) {
+		loanRepository.doReturn(loanId);
+
+		
+	}
+
+
+	public void changeStatus(int loanId) {
+		loanRepository.changeStatus(loanId);
+		
+	}
+
+
+	public List<Loan> getLoanByTitle(String searchKeyword) {
+		return loanRepository.getLoanByTitle(searchKeyword);
+	}
+
+
+	public List<Loan> getLoanByFriendName(String searchKeyword) {
+		return loanRepository.getLoanByFriendName(searchKeyword);
+	}
+
+
+	public List<Loan> getLoanByLoanDate(String searchKeyword) {
+		return loanRepository.getLoanByLoanDate(searchKeyword);
+	}
+
+
+	public List<Loan> getLoanByReturnDate(String searchKeyword) {
+		return loanRepository.getLoanByReturnDate(searchKeyword);
+	}
+	
+	public List<Loan> getLoanByReturnDueDate(String searchKeyword) {
+		return loanRepository.getLoanByReturnDueDate(searchKeyword);
+	}
 	
 }

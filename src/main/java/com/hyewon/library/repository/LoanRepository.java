@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.hyewon.library.vo.Loan;
 
@@ -49,6 +50,66 @@ public interface LoanRepository {
 
 			""")
 	public List<Loan> getLoans();
+
+	@Update("""
+			UPDATE loans
+				SET returnDate = NOW()
+			WHERE id = #{loanId}
+			""")
+	public void doReturn(int loanId);
+
+	@Update("""
+			UPDATE books b
+            INNER JOIN loans l ON b.id = l.book_id
+            SET b.status = "0"
+            WHERE l.id = #{loanId}
+			""")
+	public void changeStatus(int loanId);
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE books.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			""")
+	public List<Loan> getLoanByTitle(String searchKeyword);
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE friends.name LIKE CONCAT('%', #{searchKeyword}, '%')
+			""")
+	public List<Loan> getLoanByFriendName(String searchKeyword);
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE loans.loanDate LIKE CONCAT('%', #{searchKeyword}, '%')
+			""")
+	public List<Loan> getLoanByLoanDate(String searchKeyword);
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE loans.returnDate LIKE CONCAT('%', #{searchKeyword}, '%')
+			""")
+	public List<Loan> getLoanByReturnDate(String searchKeyword);
+	
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE loans.returnDueDate LIKE CONCAT('%', #{searchKeyword}, '%')
+			""")
+	public List<Loan> getLoanByReturnDueDate(String searchKeyword);
 
 
 	
