@@ -52,6 +52,8 @@ function searchLoan(){
             		    
             		    var returnDueDate = loan.returnDueDate.substring(0, 10); // 반납 예정일을 yyyy-mm-dd 형식으로 변환
             		    tableContent += "<td class='font-bold'>" + returnDueDate + "</td>";
+            		    tableContent += "<td><a href='modify'><button class='btn btn-warning'>수정</button></a></td>";
+            		    tableContent += "<td><a href='delete?id=" + loan.id + "'><button class='btn btn-error'>삭제</button></a></td>";
             		    tableContent += "</tr>";
              });
 
@@ -67,7 +69,7 @@ function searchLoan(){
     <div class="border-blue-400 border-4 flex">
         <select data-value="${searchKeywordType}" class="join-item h-20 text-l select" name="searchKeywordType" id="searchKeywordType">
             <option disabled selected>검색 조건</option>
-            <option value="책 제목">책 제목</option>
+            <option value="도서명">도서명</option>
             <option value="대출자">대출자</option>
             <option value="대출일자">대출일자</option>
            <option value="반납일자">반납일자</option>
@@ -85,6 +87,8 @@ function searchLoan(){
                 <col width="100"/>
                 <col width="100"/>
                 <col width="100"/>
+                <col width="60"/>
+                <col width="60"/>
             </colgroup>
             <thead>
                 <tr>
@@ -94,6 +98,8 @@ function searchLoan(){
                     <th class="text-lg">대출일자</th>
                     <th class="text-lg">반납일자</th>
                     <th class="text-lg">반납 예정일</th>
+                    <th class="text-lg">수정</th>
+                    <th class="text-lg">삭제</th>
                 </tr>
             </thead>
             <tbody id="tableBodyId">
@@ -113,6 +119,8 @@ function searchLoan(){
 						</c:if>
                     	<c:set var="returnDueDate" value="${loan.returnDueDate}" />
 						<td class="font-bold text-red-500">${fn:substring(returnDueDate, 0, 10)}</td>  
+                        <td><a href="modify?id=${loan.id }"><button class="btn btn-warning">수정</button></a></td>
+				        <td><a href="delete?id=${loan.id }"><button class="btn btn-error">삭제</button></a></td>
                     </tr>
                 </c:forEach>
             </tbody>

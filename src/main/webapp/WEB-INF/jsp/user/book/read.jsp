@@ -50,17 +50,17 @@ function searchBook(){
     }, 'json');
 }
 function openModal(bookId) {
-	$('.layer_change').show();
+	$('.layer_friend_change').show();
 	$('#modal-book-id').val(bookId);
 
 	$('.close-btn').click(function(){
 		$('.layer-bg').hide();
-		$('.layer_change').hide();
+		$('.layer_friend_change').hide();
 //		$('.layer-bg, .layer').css('display', 'none');
 	})
-	$('.close-x-btn').click(function(){
+	$('.friend-close-x-btn').click(function(){
 		$('.layer-bg').hide();
-		$('.layer_change').hide();
+		$('.layer_friend_change').hide();
 //		$('.layer-bg, .layer').css('display', 'none');
 	})
 	$('.add-back-btn').click(function(){
@@ -134,11 +134,11 @@ function confirmLoan(bookId, friendId) {
 </script>
 <nav class="flex justify-center items-center mt-20 flex-col">
 <div class="layer-bg" class="modal" id="myModal"></div>
-<div class="layer_change shadow-2xl">
+<div class="layer_friend_change shadow-2xl">
     <h1 class="text-gray-400">친구 검색</h1>
-    <span class="close-x-btn">&times;</span>
+    <span class="friend-close-x-btn">&times;</span>
     <div class="border-blue-400 border-4 flex">
-    <input type="hidden" id="modal-book-id" />
+        <input type="hidden" id="modal-book-id" />
         <select data-value="${searchKeywordType}" class="join-item h-10 text-l select text-black" name="searchFriendKeywordType" id="searchFriendKeywordType">
             <option disabled selected>검색 조건</option>
             <option value="이름">이름</option>
@@ -181,8 +181,8 @@ function confirmLoan(bookId, friendId) {
             </tbody>
         </table>
     </div>
-    <button class="close-btn btn btn-active" id="close">CLOSE</button>               
-</div>
+    <button class="close-btn btn btn-active" id="friend_close">CLOSE</button>
+    </div>             
 
             <div class="border-blue-400 border-4 flex">
                   <select data-value="${searchKeywordType}" class="join-item h-20 text-l select" name="searchKeywordType" id="searchKeywordType"> <!-- 너비와 높이를 지정합니다. -->

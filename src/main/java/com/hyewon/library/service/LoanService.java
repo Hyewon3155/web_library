@@ -76,5 +76,22 @@ public class LoanService {
 	public List<Loan> getLoanByReturnDueDate(String searchKeyword) {
 		return loanRepository.getLoanByReturnDueDate(searchKeyword);
 	}
+
+
+	public void deleteByLoanId(int id) {
+		loanRepository.deleteByLoanId(id);
+		
+	}
+
+
+	public Loan getLoanById(int id) {
+		return loanRepository.getLoanById(id);
+	}
+
+
+	public void doModify(int id, int book_id, int friend_id, String loanDate,
+			String returnDate, String returnDueDate) {
+			loanRepository.doModify(id, book_id, friend_id, loanDate, returnDate, returnDueDate);
+	}
 	
 }
