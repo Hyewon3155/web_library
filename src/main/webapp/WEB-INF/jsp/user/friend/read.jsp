@@ -28,6 +28,25 @@ function searchFriend(){
     }, 'json');
   
 }
+function doDelete(friendId) {
+    var confirmDelete = confirm("삭제하시겠습니까?");
+    if (confirmDelete) {
+        $.get('delete', {
+            id: friendId,
+        }, function(data) {
+            if (data.success) {
+                alert(data.msg);
+                location.reload();
+            } else {
+                alert("삭제에 실패하였습니다");
+                return;
+            }
+        }, 'json');
+    }
+    else {
+    	return;
+    }
+}
 </script>
 <nav class="flex justify-center items-center mt-20 flex-col">
             <div class="border-blue-400 border-4 flex">
@@ -73,7 +92,7 @@ function searchFriend(){
 								<td>${friend.cellphoneNum }</td>
 								<td>${friend.email }</td>
 								<td><a href="modify?id=${friend.id }"><button class="btn btn-warning">수정</button></a></td>
-								<td><a href="delete?id=${friend.id }"><button class="btn btn-error">삭제</button></a></td>
+								<td><button class="btn btn-error" onclick="doDelete(${friend.id });">삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

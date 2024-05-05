@@ -101,5 +101,11 @@ public class LoanService {
 	    }
 	}
 
+
+	public void deleteByFriendId(int id) {
+		loanRepository.deleteByFriendId(id);
+		
+	}
+
 	
 }

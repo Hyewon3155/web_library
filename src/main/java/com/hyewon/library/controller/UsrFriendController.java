@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyewon.library.service.FriendService;
+import com.hyewon.library.service.LoanService;
 import com.hyewon.library.util.Util;
 import com.hyewon.library.vo.Friend;
 import com.hyewon.library.vo.ResultData;
@@ -18,11 +19,13 @@ import com.hyewon.library.vo.ResultData;
 public class UsrFriendController {
 	
 	FriendService friendService;
+	LoanService loanService;
 	
 	
 	@Autowired
-	public UsrFriendController(FriendService friendService) {
+	public UsrFriendController(FriendService friendService, LoanService loanService) {
 		this.friendService = friendService;
+		this.loanService = loanService;
 	}
 	
 	@RequestMapping("/user/friend/join")
@@ -122,12 +125,10 @@ public class UsrFriendController {
 	
 	@RequestMapping("/user/friend/delete")
 	@ResponseBody
-	public String delete(int id) {
-
+	public ResultData doDelete(@RequestParam int id) {
+        loanService.deleteByFriendId(id);
         friendService.deleteById(id);
-        	
-		return Util.jsReplace("삭제되었습니다", "read");
-
+	    return ResultData.from("S-1", "삭제되었습니다.");
 	}
 	
 	@RequestMapping("/user/friend/searchFriend")

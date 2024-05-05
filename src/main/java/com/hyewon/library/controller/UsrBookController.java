@@ -98,13 +98,10 @@ public class UsrBookController {
 	
 	@RequestMapping("/user/book/delete")
 	@ResponseBody
-	public String delete(int id) {
-
-        loanService.deleteByBookId(id);
-        bookService.deleteById(id);
-        	
-		return Util.jsReplace("삭제되었습니다", "read");
-
+	public ResultData doDelete(@RequestParam int id) {
+		loanService.deleteByBookId(id);
+        bookService.deleteById(id);	    
+        return ResultData.from("S-1", "삭제되었습니다.");
 	}
 	
 	@RequestMapping("/user/book/modify")

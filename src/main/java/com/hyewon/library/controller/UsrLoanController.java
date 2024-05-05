@@ -1,5 +1,6 @@
 package com.hyewon.library.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +121,7 @@ public class UsrLoanController {
 	
 	@RequestMapping("/user/loan/doModify")
 	@ResponseBody
-	public String doModify(int id, int book_id, int friend_id, String loanDate, @RequestParam(required = false) String returnDate, String returnDueDate) {
+	public String doModify(int id, int book_id, int friend_id, String loanDate, @RequestParam(required = false) String returnDate, String returnDueDate) throws SQLException {
 	    try {
 	        // 이름, 학교, 학과, 전화번호, 이메일이 비어 있는지 확인
 	        if (Util.empty(loanDate)) {
@@ -134,12 +135,17 @@ public class UsrLoanController {
 	        
 	        // DB 쿼리가 정상적으로 실행됐을 때
 	        return Util.jsReplace(Util.f("대출 이력 정보가 수정되었습니다"), Util.f("read"));
+	    } catch (NullPointerException e) {
+	        // Null 포인트 오류 처리
+	        e.printStackTrace();
+	        return Util.jsHistoryBack("필수 데이터가 누락되었습니다.");
 	    } catch (Exception e) {
-	        // DB 쿼리 실행 중 예외가 발생했을 때
+	        // 그 외 예외 처리
 	        e.printStackTrace();
 	        return Util.jsHistoryBack("대출 이력 정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
 	    }
 	}
+
 
 
 

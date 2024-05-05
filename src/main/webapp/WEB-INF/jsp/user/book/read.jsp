@@ -39,7 +39,7 @@ function searchBook(){
             	 tableContent += "<tr><td>" + (index + 1) + "</td><td>" + book.title + "</td><td>" + book.author + "</td><td>" + book.publisher + "</td>" + typeCellContent + statusCellContent;
 
 
-            	 tableContent += "<td><a href='modify?id=" + book.id + "'><button class='btn btn-warning'>수정</button></a></td><td><a href='delete?id=" + book.id + "'><button class='btn btn-error'>삭제</button></a></td></tr>";
+            	 tableContent += "<td><a href='modify?id=" + book.id + "'><button class='btn btn-warning'>수정</button></a></td><td><button class='btn btn-error'onclick='doDelete(" + book.id + ");'>삭제</button></td></tr>";
 
              });
 
@@ -71,6 +71,25 @@ function openModal(bookId) {
 		$('.layer_add').hide();
 //		$('.layer-bg, .layer').css('display', 'none');
 	})
+}
+function doDelete(bookId) {
+    var confirmDelete = confirm("삭제하시겠습니까?");
+    if (confirmDelete) {
+        $.get('delete', {
+            id: bookId,
+        }, function(data) {
+            if (data.success) {
+                alert(data.msg);
+                location.reload();
+            } else {
+                alert("삭제에 실패하였습니다");
+                return;
+            }
+        }, 'json');
+    }
+    else {
+    	return;
+    }
 }
 
 	// 모달 창을 닫기 위한 함수
@@ -239,7 +258,7 @@ function confirmLoan(bookId, friendId) {
 									<td class="text-red-600 font-bold">대출중</td>
 								</c:if>
 								<td><a href="modify?id=${book.id }"><button class="btn btn-warning">수정</button></a></td>
-								<td><a href="delete?id=${book.id }"><button class="btn btn-error">삭제</button></a></td>
+								<td><button class="btn btn-error" onclick="doDelete(${book.id });">삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>

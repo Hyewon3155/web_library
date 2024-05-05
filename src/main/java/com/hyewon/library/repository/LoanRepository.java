@@ -145,6 +145,12 @@ public interface LoanRepository {
 			""")
 	public void doModify(int id, int book_id, int friend_id, String loanDate,
 			String returnDate, String returnDueDate);
+
+	@Delete("""
+			DELETE FROM loans
+			WHERE friend_id = #{id}
+			""")
+	public void deleteByFriendId(int id);
 	
 	
 
