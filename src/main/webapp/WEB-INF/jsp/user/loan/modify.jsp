@@ -346,13 +346,13 @@ function openFriendModal() {
     <label for="description" class="block mb-2 text-xl font-bold">날짜</label>
     <div class="flex justify-around">
         <!-- 설명 -->
-        <label for="description" class="block mb-2 text-base font-medium">대출일자</label>
-        <label for="description" class="block mb-2 text-base font-medium">반납일자</label>
+        <label for="loanDate" class="block mb-2 text-base font-medium">대출일자</label>
+        <label for="returnDate" class="block mb-2 text-base font-medium">반납일자</label>
     </div>
     <label class="flex mb-10">
-        <input type="date" name="loanDate" class="w-full p-2 mb-4 border rounded" value="${loan.loanDate}"/>-<input type="date" class="w-full p-2 mb-4 border rounded" value="${loan.returnDate}"/>
+        <input type="date" name="loanDate" class="w-full p-2 mb-4 border rounded" value="${loan.loanDate}"/>-<input type="date" name="returnDate" class="w-full p-2 mb-4 border rounded" value="${loan.returnDate}"/>
     </label>
-    <label for="returnDate" class="block mb-2 font-bold text-xl">반납 예정일</label>
+    <label for="returnDueDate" class="block mb-2 font-bold text-xl">반납 예정일</label>
     <input type="date" name="returnDueDate" class="w-full p-2 mb-4 border rounded" value="${loan.returnDueDate}"/>
 
     <button class="btn w-full p-2 border rounded btn-success font-bold text-base mt-10 text-white">대출 이력 수정</button>

@@ -89,9 +89,17 @@ public class LoanService {
 	}
 
 
-	public void doModify(int id, int book_id, int friend_id, String loanDate,
-			String returnDate, String returnDueDate) {
-			loanRepository.doModify(id, book_id, friend_id, loanDate, returnDate, returnDueDate);
+	public void doModify(int id, int book_id, int friend_id, String loanDate, String returnDate, String returnDueDate) {
+	    try {
+	        loanRepository.doModify(id, book_id, friend_id, loanDate, returnDate, returnDueDate);
+	    } catch (Exception e) {
+	        // DB 쿼리 실행 중 예외가 발생했을 때
+	        e.printStackTrace();
+	        // 예외 처리 방법에 따라 적절한 처리를 해줍니다.
+	        // 여기서는 예외를 다시 호출자에게 던지도록 설정할 수 있습니다.
+	        throw new RuntimeException("대출 이력 정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.", e);
+	    }
 	}
+
 	
 }

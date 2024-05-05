@@ -5,21 +5,45 @@
 <c:set var="pageTitle" value="대출 조회" />
 <%@ include file="../common/head.jsp" %>
 <script>
-function doReturn(loanId){
-    $.get('doReturn', {
-        loanId : loanId,
-    }, function(data) {
-        if (data.success) {
-            alert(data.msg);
-            location.reload();
-         } else {
-             alert("반납에 실패하였습니다");
-             return;
-         }
-    }, 'json');
-  
+function doReturn(loanId) {
+    var confirmReturn = confirm("반납하시겠습니까?");
+    if (confirmReturn) {
+        $.get('doReturn', {
+            loanId: loanId,
+        }, function(data) {
+            if (data.success) {
+                alert(data.msg);
+                location.reload();
+            } else {
+                alert("반납에 실패하였습니다");
+                return;
+            }
+        }, 'json');
+    }
+    else {
+    	return;
+    }
 }
 
+function doDelete(loanId) {
+    var confirmDelete = confirm("삭제하시겠습니까?");
+    if (confirmDelete) {
+        $.get('delete', {
+            id: loanId,
+        }, function(data) {
+            if (data.success) {
+                alert(data.msg);
+                location.reload();
+            } else {
+                alert("삭제에 실패하였습니다");
+                return;
+            }
+        }, 'json');
+    }
+    else {
+    	return;
+    }
+}
 function searchLoan(){
     var searchKeyword = document.getElementById('searchKeyword').value;
     var searchKeywordType = document.getElementById('searchKeywordType').value;
@@ -33,28 +57,31 @@ function searchLoan(){
 
              // c:forEach 대체
              data.data1.forEach(function(loan, index) {
-            		    tableContent += "<tr>";
-            		    tableContent += "<td>" + (index + 1) + "</td>";
-            		    tableContent += "<td>" + loan.title + "</td>";
-            		    tableContent += "<td>" + loan.friendName + "</td>";
-            		    
-            		    var loanDate = loan.loanDate.substring(0, 10); // 대출일을 yyyy-mm-dd 형식으로 변환
-            		    tableContent += "<td class='font-bold'>" + loanDate + "</td>";
+            	 tableContent += "<tr>";
+            	 tableContent += "<td>" + (index + 1) + "</td>";
+            	 tableContent += "<td>" + loan.title + "</td>";
+            	 tableContent += "<td>" + loan.friendName + "</td>";
 
-            		    if (!loan.returnDate) {
-            		        // 대출이 반납되지 않았을 경우
-            		        tableContent += "<td><button class='btn btn-warning' onclick='doReturn(" + loan.id + ");'>반납하기</button></td>";
-            		    } else {
-            		        // 대출이 반납된 경우
-            		        var returnDate = loan.returnDate.substring(0, 10); // 반납일을 yyyy-mm-dd 형식으로 변환
-            		        tableContent += "<td class='font-bold'>" + returnDate + "</td>";
-            		    }
-            		    
-            		    var returnDueDate = loan.returnDueDate.substring(0, 10); // 반납 예정일을 yyyy-mm-dd 형식으로 변환
-            		    tableContent += "<td class='font-bold'>" + returnDueDate + "</td>";
-            		    tableContent += "<td><a href='modify'><button class='btn btn-warning'>수정</button></a></td>";
-            		    tableContent += "<td><a href='delete?id=" + loan.id + "'><button class='btn btn-error'>삭제</button></a></td>";
-            		    tableContent += "</tr>";
+            	 var loanDate = loan.loanDate.substring(0, 10); // 대출일을 yyyy-mm-dd 형식으로 변환
+            	 tableContent += "<td class='font-bold'>" + loanDate + "</td>";
+
+            	 if ((${empty loan.returnDate})) {
+            	     // 대출이 반납된 경우
+            	     var returnDate = loan.returnDate.substring(0, 10); // 반납일을 yyyy-mm-dd 형식으로 변환
+            	     tableContent += "<td class='font-bold'>" + returnDate + "</td>";
+            	 } else {
+            	     // 대출이 반납되지 않았을 경우
+            	     tableContent += "<td><button class='btn btn-warning' onclick='doReturn(" + loan.id + ");'>반납하기</button></td>";
+            	 }
+
+            	 var returnDueDate = loan.returnDueDate.substring(0, 10); // 반납 예정일을 yyyy-mm-dd 형식으로 변환
+            	 tableContent += "<td class='font-bold text-red-500'>" + returnDueDate + "</td>";
+
+            	 tableContent += "<td><a href='modify?id=" + loan.id + "'><button class='btn btn-warning'>수정</button></a></td>";
+            	 tableContent += "<td><button class='btn btn-error' onclick='doDelete(" + loan.id + ");'>삭제</button></td>";
+
+            	 tableContent += "</tr>";
+
              });
 
              $("#tableBodyId").html(tableContent);
@@ -120,7 +147,7 @@ function searchLoan(){
                     	<c:set var="returnDueDate" value="${loan.returnDueDate}" />
 						<td class="font-bold text-red-500">${fn:substring(returnDueDate, 0, 10)}</td>  
                         <td><a href="modify?id=${loan.id }"><button class="btn btn-warning">수정</button></a></td>
-				        <td><a href="delete?id=${loan.id }"><button class="btn btn-error">삭제</button></a></td>
+				        <td><button class="btn btn-error" onclick="doDelete(${loan.id });">삭제</button></td>
                     </tr>
                 </c:forEach>
             </tbody>

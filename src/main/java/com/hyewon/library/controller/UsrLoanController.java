@@ -95,11 +95,11 @@ public class UsrLoanController {
 
 	@RequestMapping("/user/loan/delete")
 	@ResponseBody
-	public String delete(int id) {
+	public ResultData doDelete(@RequestParam int id) {
         loanService.deleteByLoanId(id);
-         return Util.jsReplace("삭제되었습니다", "read");
-
+	    return ResultData.from("S-1", "삭제되었습니다.");
 	}
+	
 	
 	@RequestMapping("/user/loan/manage")
 	public String showManage() {
@@ -121,18 +121,26 @@ public class UsrLoanController {
 	@RequestMapping("/user/loan/doModify")
 	@ResponseBody
 	public String doModify(int id, int book_id, int friend_id, String loanDate, @RequestParam(required = false) String returnDate, String returnDueDate) {
-	    // 이름, 학교, 학과, 전화번호, 이메일이 비어 있는지 확인
-	    if (Util.empty(loanDate)) {
-	        return Util.jsHistoryBack("대출일자를 선택해주세요");
+	    try {
+	        // 이름, 학교, 학과, 전화번호, 이메일이 비어 있는지 확인
+	        if (Util.empty(loanDate)) {
+	            return Util.jsHistoryBack("대출일자를 선택해주세요");
+	        }
+	        if (Util.empty(returnDueDate)) {
+	            return Util.jsHistoryBack("반납 예정일을 선택해주세요");
+	        }
+	        
+	        loanService.doModify(id, book_id, friend_id, loanDate, returnDate, returnDueDate);
+	        
+	        // DB 쿼리가 정상적으로 실행됐을 때
+	        return Util.jsReplace(Util.f("대출 이력 정보가 수정되었습니다"), Util.f("read"));
+	    } catch (Exception e) {
+	        // DB 쿼리 실행 중 예외가 발생했을 때
+	        e.printStackTrace();
+	        return Util.jsHistoryBack("대출 이력 정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
 	    }
-	    if (Util.empty(returnDueDate)) {
-	        return Util.jsHistoryBack("반납 예정일을 선택해주세요");
-	    }
-	    
-	    
-	    loanService.doModify(id, book_id, friend_id, loanDate, returnDate, returnDueDate);
-	    return Util.jsReplace(Util.f("대출 이력 정보가 수정되었습니다"), Util.f("read"));
 	}
+
 
 
 	@RequestMapping("/user/loan/searchBook")
