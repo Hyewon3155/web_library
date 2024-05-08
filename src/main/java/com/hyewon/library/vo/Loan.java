@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Loan {
 	private int id;
+	private int index;
 	private String title;
 	private String friendName;
 	private String loanDate;
 	private String returnDate;
 	private String returnDueDate;
+	private int overdueDays;
 	private int friend_id;
 	private int book_id;
 }

@@ -1,13 +1,23 @@
 package com.hyewon.library.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.hyewon.library.service.BookService;
 import com.hyewon.library.service.FriendService;
 import com.hyewon.library.service.LoanService;
@@ -175,6 +185,70 @@ public class UsrBookController {
 	    
 	    return ResultData.from("S-1", "", "friends", friends);
 	}
+	
+	 @RequestMapping(value = "/user/book/uploadExcel", method = RequestMethod.POST)
+	 @ResponseBody
+	    public String uploadExcel(@RequestParam("excelFile") MultipartFile excelFile, RedirectAttributes redirectAttributes) {
+	        try {
+	            // 엑셀 파일을 읽고 데이터베이스에 삽입
+	            parseAndInsertExcel(excelFile);
+
+	            // 업로드 성공 메시지 설정
+	            redirectAttributes.addFlashAttribute("successMessage", "Excel 파일 업로드 및 처리가 완료되었습니다.");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            // 업로드 또는 파싱 중 오류 발생 시 처리
+	            redirectAttributes.addFlashAttribute("errorMessage", "Excel 파일 업로드 또는 처리 중 오류가 발생했습니다.");
+	        }
+	        return "redirect:/"; // 업로드 후 리다이렉트
+	    }
+
+	    // 엑셀 파일을 읽고 데이터베이스에 삽입하는 메서드
+	    public void parseAndInsertExcel(MultipartFile excelFile) throws IOException, InvalidFormatException {
+	        try (InputStream inputStream = excelFile.getInputStream()) {
+	            Workbook workbook = WorkbookFactory.create(inputStream);
+	            Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트를 가져옴
+
+	            // 첫 번째 행은 데이터가 아니므로 건너뜀
+	            boolean firstRowSkipped = false;
+
+	            // 각 행을 반복하여 데이터베이스에 삽입
+	            for (Row row : sheet) {
+	                if (!firstRowSkipped) {
+	                    firstRowSkipped = true;
+	                    continue; // 첫 번째 행은 건너뜁니다.
+	                }
+
+	                // 셀에서 데이터 추출하여 변수에 저장
+	                String title = row.getCell(0).getStringCellValue();
+	                String author = row.getCell(1).getStringCellValue();
+	                String publisher = row.getCell(2).getStringCellValue();
+	                String typeString = row.getCell(3).getStringCellValue();
+	                String statusString = row.getCell(4).getStringCellValue();
+
+	                // type을 숫자로 변환하여 저장
+	                int type;
+	                if ("전공".equals(typeString)) {
+	                    type = 1;
+	                } else {
+	                    type = 0;
+	                }
+
+	                // status를 숫자로 변환하여 저장
+	                int status;
+	                if ("대출 가능".equals(statusString)) {
+	                    status = 0;
+	                } else {
+	                    status = 1;
+	                }
+
+	                // BookService를 사용하여 데이터베이스에 책을 삽입
+	                bookService.doExcelJoin(title, author, publisher, type, status);
+	            }
+
+	            workbook.close();
+	        }
+	    }
 
 	
 

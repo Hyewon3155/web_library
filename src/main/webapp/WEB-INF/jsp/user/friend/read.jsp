@@ -4,6 +4,57 @@
 <c:set var="pageTitle" value="친구 조회" />
 <%@ include file="../common/head.jsp" %>
 <script>
+function downloadExcel() {
+    var loans = [];
+    $("#tableBodyId tr").each(function() {
+        var loan = {
+            번호: $(this).find("td").eq(0).text(),
+            이름: $(this).find("td").eq(1).text(),
+            소속: $(this).find("td").eq(2).text(),
+            전화번호: $(this).find("td").eq(3).text(),
+            이메일: $(this).find("td").eq(4).text(),
+        };
+        loans.push(loan);
+    });
+
+    // 엑셀 파일 형식 지정
+    const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8';
+
+    // 엑셀 워크북 생성
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(loans);
+    
+    // 한국어 열 제목 설정
+    worksheet['A1'].v = '번호';
+    worksheet['B1'].v = '이름';
+    worksheet['C1'].v = '소속';
+    worksheet['D1'].v = '전화번호';
+    worksheet['E1'].v = '이메일';
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Loans');
+
+    // 엑셀 파일 생성 (Blob)
+    const excelBlob = new Blob([s2ab(XLSX.write(workbook, { type: 'binary' }))], { type: mimeType });
+
+    // 다운로드 링크 생성
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(excelBlob);
+    downloadLink.download = '친구 목록.xlsx';
+    document.body.appendChild(downloadLink);
+
+    // 다운로드 링크 클릭 (자동 다운로드)
+    downloadLink.click();
+
+    // 다운로드 후 링크 제거
+    document.body.removeChild(downloadLink);
+}
+function s2ab(s) {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
+
 function searchFriend(){
     var searchKeyword = document.getElementById('searchKeyword').value;
     var searchKeywordType = document.getElementById('searchKeywordType').value;
@@ -60,6 +111,10 @@ function doDelete(friendId) {
                     <input class="input join-item w-full h-20 text-xl" name="searchKeyword" placeholder="검색어를 적어주세요" id="searchKeyword"/> <!-- 너비와 높이를 지정합니다. -->
                 <button class="join-item h-20 w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchFriend();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
             </div>
+            <button class="btn btn-success mt-5" onclick="downloadExcel()">
+               <i class="bi bi-file-earmark-spreadsheet-fill mr-2"></i>	
+               엑셀로 다운로드		    
+    		</button> 
             <div class="table-box-type-1 w-8/12 mt-10">
 				<table class="table">
 					<colgroup>

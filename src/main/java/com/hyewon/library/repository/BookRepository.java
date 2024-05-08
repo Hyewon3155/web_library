@@ -84,6 +84,17 @@ public interface BookRepository {
 			""")
 	public void doLoan(int bookId);
 
+	@Insert("""
+			INSERT INTO books
+				SET title = #{title},
+					author = #{author},
+					publisher = #{publisher},
+			        `type` = #{type},
+			        `status` = #{status}
+			        
+			""")
+	public void doExcelJoin(String title, String author, String publisher, int type, int status);
+
 
 	
 

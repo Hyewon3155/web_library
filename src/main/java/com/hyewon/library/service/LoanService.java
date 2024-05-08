@@ -18,10 +18,6 @@ public class LoanService {
 		this.loanRepository = loanRepository;
 	}
 	
-	
-	public void addSchedule(int id, int loginedMemberId, String event_date, String event_name, String event_body, String event_color) {
-		loanRepository.addSchedule(id, loginedMemberId, event_date, event_name, event_body, event_color);
-	}
 
 
 	public void doLoan(int bookId, int friendId) {
@@ -105,6 +101,37 @@ public class LoanService {
 	public void deleteByFriendId(int id) {
 		loanRepository.deleteByFriendId(id);
 		
+	}
+
+
+	public List<Loan> getOldLoans() {
+		return loanRepository.getOldLoans();
+	}
+
+
+
+	public List<Loan> getOldLoanByTitle(String searchKeyword) {
+		return loanRepository.getOldLoanByTitle(searchKeyword);
+	}
+
+
+
+	public List<Loan> getOldLoanByFriendName(String searchKeyword) {
+		return loanRepository.getOldLoanByFriendName(searchKeyword);
+	}
+
+
+
+	public List<Loan> getOldLoanByLoanDate(String searchKeyword) {
+		return loanRepository.getOldLoanByLoanDate(searchKeyword);
+	}
+	
+	public List<Loan> getOldLoanByReturnDate(String searchKeyword) {
+		return loanRepository.getOldLoanByReturnDate(searchKeyword);
+	}
+	
+	public List<Loan> getOldLoanByReturnDueDate(String searchKeyword) {
+		return loanRepository.getOldLoanByReturnDueDate(searchKeyword);
 	}
 
 	

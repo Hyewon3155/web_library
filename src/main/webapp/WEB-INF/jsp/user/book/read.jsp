@@ -4,6 +4,91 @@
 <c:set var="pageTitle" value="도서 조회" />
 <%@ include file="../common/head.jsp" %>
 <script>
+function uploadExcel() {
+    // 선택된 파일 가져오기
+    var excelFile = document.getElementById('excelFileInput').files[0];
+    if (!excelFile) {
+        alert('파일을 선택해주세요.');
+        return;
+    }
+
+    // FormData 객체 생성
+    var formData = new FormData();
+    formData.append('excelFile', excelFile);
+
+    // AJAX를 사용하여 서버에 엑셀 파일 전송
+    $.ajax({
+        url: 'uploadExcel', // 업로드를 처리할 서버의 URL
+        method: 'POST',
+        data: formData,
+        processData: false, // 데이터 처리 방식 설정
+        contentType: false, // 컨텐츠 타입 설정
+        success: function(data) {
+            if (data.success) {
+                alert(data.msg);
+                location.reload(); // 성공적으로 업데이트되면 페이지를 다시 로드
+            } else {
+                alert('업로드에 실패했습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('서버와 통신 중 오류가 발생했습니다.');
+        }
+    });
+}
+function downloadExcel() {
+    var loans = [];
+    $("#tableBodyId tr").each(function() {
+        var loan = {
+            번호: $(this).find("td").eq(0).text(),
+            제목: $(this).find("td").eq(1).text(),
+            저자: $(this).find("td").eq(2).text(),
+            출판사: $(this).find("td").eq(3).text(),
+            전공여부: $(this).find("td").eq(4).text(),
+            대출여부: $(this).find("td").eq(5).text() === '대출' ? '대출 가능' : '대출 불가능'
+        };
+        loans.push(loan);
+    });
+
+    // 엑셀 파일 형식 지정
+    const mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8';
+
+    // 엑셀 워크북 생성
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(loans);
+    
+    // 한국어 열 제목 설정
+    worksheet['A1'].v = '번호';
+    worksheet['B1'].v = '제목';
+    worksheet['C1'].v = '저자';
+    worksheet['D1'].v = '출판사';
+    worksheet['E1'].v = '전공여부';
+    worksheet['F1'].v = '대출여부';
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Loans');
+
+    // 엑셀 파일 생성 (Blob)
+    const excelBlob = new Blob([s2ab(XLSX.write(workbook, { type: 'binary' }))], { type: mimeType });
+
+    // 다운로드 링크 생성
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(excelBlob);
+    downloadLink.download = '도서 목록.xlsx';
+    document.body.appendChild(downloadLink);
+
+    // 다운로드 링크 클릭 (자동 다운로드)
+    downloadLink.click();
+
+    // 다운로드 후 링크 제거
+    document.body.removeChild(downloadLink);
+}
+function s2ab(s) {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
+
 function searchBook(){
     var searchKeyword = document.getElementById('searchKeyword').value;
     var searchKeywordType = document.getElementById('searchKeywordType').value;
@@ -213,6 +298,21 @@ function confirmLoan(bookId, friendId) {
                     <input class="input join-item w-full h-20 text-xl" name="searchKeyword" placeholder="검색어를 적어주세요" id="searchKeyword"/> <!-- 너비와 높이를 지정합니다. -->
                 <button class="join-item h-20 w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchBook();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
             </div>
+            
+			<div class="flex">
+			    <!-- 엑셀 다운로드 버튼 -->
+			    <button class="btn btn-success mt-5 mr-10" onclick="downloadExcel()">
+			        <i class="bi bi-file-earmark-spreadsheet-fill mr-2"></i>
+			        엑셀로 다운로드		    
+			    </button>
+			
+			    <!-- 엑셀 파일 업로드 버튼 -->
+			    <label for="excelFileInput" class="btn btn-warning mt-5" onclick="uploadExcel()">
+			        <input type="file" id="excelFileInput" accept=".xlsx, .xls" style="display: none;">
+			        <i class="bi bi-file-earmark-spreadsheet mr-2"></i>
+			        엑셀에서 업로드  
+			    </label>
+			</div>
             <div class="table-box-type-1 w-8/12 mt-10">
 				<table class="table">
 					<colgroup>

@@ -1,15 +1,25 @@
 package com.hyewon.library.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.hyewon.library.service.BookService;
 import com.hyewon.library.service.FriendService;
 import com.hyewon.library.service.LoanService;
@@ -98,14 +108,11 @@ public class UsrLoanController {
 	@ResponseBody
 	public ResultData doDelete(@RequestParam int id) {
         loanService.deleteByLoanId(id);
+        loanService.doReturn(id);
 	    return ResultData.from("S-1", "삭제되었습니다.");
 	}
 	
-	
-	@RequestMapping("/user/loan/manage")
-	public String showManage() {
-		return "user/loan/manage";
-	}
+
 	
 	@RequestMapping("/user/loan/modify")
 	public String showModify(Model model, int id) {
@@ -212,14 +219,53 @@ public class UsrLoanController {
 	    
 	    return ResultData.from("S-1", "", "friends", friends);
 	}
-	@RequestMapping("/user/loan/schedule-modify")
-	public String modifySchedule() {
-		return "user/loan/schedule-add";
+	
+	@RequestMapping("/user/loan/manage")
+	public String showManage(Model model) {
+		List<Loan> loans = loanService.getOldLoans();
+		model.addAttribute("loans", loans);
+		return "user/loan/manage";
 	}
 	
-	@RequestMapping("/user/loan/schedule-delete")
-	public String deleteSchedule() {
-		return "user/loan/schedule-delete";
+	@RequestMapping("/user/loan/searchOldLoan")
+	@ResponseBody
+	public ResultData searchOldLoan(@RequestParam(defaultValue = "") String searchKeywordType,
+	        @RequestParam(defaultValue = "") String searchKeyword) {
+	    
+	    if (Util.empty(searchKeywordType)) {
+	        return ResultData.from("F-1", "검색 조건을 설정해주세요");
+	    }
+	    if (Util.empty(searchKeyword)) {
+	        return ResultData.from("F-1", "검색어를 입력해주세요");
+	    }
+	    
+	    List<Loan> loans = null;
+	    if ("도서명".equals(searchKeywordType)) {
+	        loans = loanService.getOldLoanByTitle(searchKeyword);
+
+	    } else if ("대출자".equals(searchKeywordType)) {
+	        loans = loanService.getOldLoanByFriendName(searchKeyword);
+
+	    } else if ("대출일자".equals(searchKeywordType)) {
+	        loans = loanService.getOldLoanByLoanDate(searchKeyword);
+
+	    } else if ("반납일자".equals(searchKeywordType)) {
+	        loans = loanService.getOldLoanByReturnDate(searchKeyword);
+
+	    } else if ("반납예정일".equals(searchKeywordType)) {
+	        loans = loanService.getOldLoanByReturnDueDate(searchKeyword);
+
+	    }
+	    
+	    if (loans == null || loans.isEmpty()) {
+	        return ResultData.from("F-2", "해당 대출 이력이 없습니다");
+	    }
+	    
+	    return ResultData.from("S-1", "", "loans", loans);
 	}
+
+
+        
+	
 
 }

@@ -68,6 +68,11 @@ public class BookService {
 	}
 
 
+	public void doExcelJoin(String title, String author, String publisher, int type, int status) {
+		bookRepository.doExcelJoin(title, author, publisher, type, status);
+	}
+
+
 	
 
 }

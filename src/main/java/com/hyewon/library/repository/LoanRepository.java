@@ -13,18 +13,6 @@ import com.hyewon.library.vo.Loan;
 @Mapper
 public interface LoanRepository {
 	
-	@Insert("""
-			INSERT INTO `schedule`
-				SET id = #{id},
-				    event_member = #{event_member},
-				    event_date = #{event_date},
-					event_name = #{event_name},
-					event_body = #{event_body},
-					event_color = #{event_color}
-			        
-			""")
-	public void addSchedule(int id, int event_member, String event_date, String event_name, String event_body, String event_color);
-	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
 
@@ -151,6 +139,80 @@ public interface LoanRepository {
 			WHERE friend_id = #{id}
 			""")
 	public void deleteByFriendId(int id);
+
+	@Select("""
+		SELECT 
+		    friends.name AS friendName, 
+		    books.title AS title,
+		    loans.friend_id,
+		    loans.book_id,
+		    SUBSTRING(loans.loanDate, 1, 10) AS loanDate, 
+		    SUBSTRING(loans.returnDate, 1, 10) AS returnDate,
+		    SUBSTRING(loans.returnDueDate, 1, 10) AS returnDueDate,
+		    TIMESTAMPDIFF(DAY, loans.returnDueDate, loans.returnDate) AS overdueDays
+		FROM loans
+		JOIN friends ON loans.friend_id = friends.id
+		JOIN books ON loans.book_id = books.id
+		WHERE loans.returnDate > loans.returnDueDate;
+
+
+		""")
+	public List<Loan> getOldLoans();
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title, 		    
+			TIMESTAMPDIFF(DAY, loans.returnDueDate, loans.returnDate) AS overdueDays
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE books.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND loans.returnDate > loans.returnDueDate;
+			""")
+	public List<Loan> getOldLoanByTitle(String searchKeyword);
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title, 		    
+			TIMESTAMPDIFF(DAY, loans.returnDueDate, loans.returnDate) AS overdueDays
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE friends.name LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND loans.returnDate > loans.returnDueDate;
+			""")
+	public List<Loan> getOldLoanByFriendName(String searchKeyword);
+
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title, 		    
+			TIMESTAMPDIFF(DAY, loans.returnDueDate, loans.returnDate) AS overdueDays
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE loans.loanDate LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND loans.returnDate > loans.returnDueDate;
+			""")
+	public List<Loan> getOldLoanByLoanDate(String searchKeyword);
+	
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title, 		    
+			TIMESTAMPDIFF(DAY, loans.returnDueDate, loans.returnDate) AS overdueDays
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE loans.returnDate LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND loans.returnDate > loans.returnDueDate;
+			""")
+	public List<Loan> getOldLoanByReturnDate(String searchKeyword);
+	
+	@Select("""
+			SELECT loans.*, friends.name AS friendName, books.title AS title, 		    
+			TIMESTAMPDIFF(DAY, loans.returnDueDate, loans.returnDate) AS overdueDays
+			FROM loans
+			JOIN friends ON loans.friend_id = friends.id
+			JOIN books ON loans.book_id = books.id
+			WHERE loans.returnDueDate LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND loans.returnDAte > loans.returnDueDate;
+			""")
+	public List<Loan> getOldLoanByReturnDueDate(String searchKeyword);
 	
 	
 
