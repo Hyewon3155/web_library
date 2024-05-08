@@ -55,7 +55,13 @@ public interface LoanRepository {
 	public void changeStatus(int loanId);
 
 	@Select("""
-			SELECT loans.*, friends.name AS friendName, books.title AS title
+			SELECT friends.name AS friendName, 
+		    books.title AS title,
+		    loans.friend_id,
+		    loans.book_id,
+		    SUBSTRING(loans.loanDate, 1, 10) AS loanDate, 
+		    SUBSTRING(loans.returnDate, 1, 10) AS returnDate,
+		    SUBSTRING(loans.returnDueDate, 1, 10) AS returnDueDate
 			FROM loans
 			JOIN friends ON loans.friend_id = friends.id
 			JOIN books ON loans.book_id = books.id
@@ -64,7 +70,13 @@ public interface LoanRepository {
 	public List<Loan> getLoanByTitle(String searchKeyword);
 
 	@Select("""
-			SELECT loans.*, friends.name AS friendName, books.title AS title
+			SELECT friends.name AS friendName, 
+		    books.title AS title,
+		    loans.friend_id,
+		    loans.book_id,
+		    SUBSTRING(loans.loanDate, 1, 10) AS loanDate, 
+		    SUBSTRING(loans.returnDate, 1, 10) AS returnDate,
+		    SUBSTRING(loans.returnDueDate, 1, 10) AS returnDueDate
 			FROM loans
 			JOIN friends ON loans.friend_id = friends.id
 			JOIN books ON loans.book_id = books.id
@@ -82,7 +94,13 @@ public interface LoanRepository {
 	public List<Loan> getLoanByLoanDate(String searchKeyword);
 
 	@Select("""
-			SELECT loans.*, friends.name AS friendName, books.title AS title
+			SELECT friends.name AS friendName, 
+		    books.title AS title,
+		    loans.friend_id,
+		    loans.book_id,
+		    SUBSTRING(loans.loanDate, 1, 10) AS loanDate, 
+		    SUBSTRING(loans.returnDate, 1, 10) AS returnDate,
+		    SUBSTRING(loans.returnDueDate, 1, 10) AS returnDueDate
 			FROM loans
 			JOIN friends ON loans.friend_id = friends.id
 			JOIN books ON loans.book_id = books.id
@@ -91,7 +109,13 @@ public interface LoanRepository {
 	public List<Loan> getLoanByReturnDate(String searchKeyword);
 	
 	@Select("""
-			SELECT loans.*, friends.name AS friendName, books.title AS title
+			SELECT friends.name AS friendName, 
+		    books.title AS title,
+		    loans.friend_id,
+		    loans.book_id,
+		    SUBSTRING(loans.loanDate, 1, 10) AS loanDate, 
+		    SUBSTRING(loans.returnDate, 1, 10) AS returnDate,
+		    SUBSTRING(loans.returnDueDate, 1, 10) AS returnDueDate
 			FROM loans
 			JOIN friends ON loans.friend_id = friends.id
 			JOIN books ON loans.book_id = books.id

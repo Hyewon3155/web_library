@@ -7,13 +7,17 @@
 <script>
 function downloadExcel() {
     var loans = [];
+    var returnDate = $(this).find("td").eq(5).text().trim(); // 반납일을 가져옴
+
+    // 반납일이 '반납하기'인 경우에는 빈 문자열로 설정, 그렇지 않은 경우에는 날짜 그대로 설정
+    var formattedReturnDate = returnDate === '반납하기' ? '' : returnDate;
     $("#tableBodyId tr").each(function() {
         var loan = {
             번호: $(this).find("td").eq(0).text(),
             제목: $(this).find("td").eq(1).text(),
             대출자: $(this).find("td").eq(2).text(),
             대출일: $(this).find("td").eq(3).text(),
-            반납일: $(this).find("td").eq(4).text(),
+            반납일: formattedReturnDate,
             반납예정일: $(this).find("td").eq(5).text(),
         };
         loans.push(loan);
@@ -115,20 +119,18 @@ function searchLoan(){
             	 tableContent += "<td>" + loan.title + "</td>";
             	 tableContent += "<td>" + loan.friendName + "</td>";
 
-            	 var loanDate = loan.loanDate.substring(0, 10); // 대출일을 yyyy-mm-dd 형식으로 변환
-            	 tableContent += "<td class='font-bold'>" + loanDate + "</td>";
+            	 tableContent += "<td class='font-bold'>" + loan.loanDate + "</td>";
 
-            	 if ((${empty loan.returnDate})) {
-            	     // 대출이 반납된 경우
-            	     var returnDate = loan.returnDate.substring(0, 10); // 반납일을 yyyy-mm-dd 형식으로 변환
-            	     tableContent += "<td class='font-bold'>" + returnDate + "</td>";
-            	 } else {
-            	     // 대출이 반납되지 않았을 경우
-            	     tableContent += "<td><button class='btn btn-warning' onclick='doReturn(" + loan.id + ");'>반납하기</button></td>";
-            	 }
+            	 if (loan.returnDate.trim() === '') {
+            		    // 대출이 반납된 경우
+            		    tableContent += "<td class='font-bold'>" + loan.returnDate + "</td>";
+            		} else {
+            		    // 대출이 반납되지 않았을 경우
+            		    tableContent += "<td><button class='btn btn-warning' onclick='doReturn(" + loan.id + ");'>반납하기</button></td>";
+            		}
 
-            	 var returnDueDate = loan.returnDueDate.substring(0, 10); // 반납 예정일을 yyyy-mm-dd 형식으로 변환
-            	 tableContent += "<td class='font-bold text-red-500'>" + returnDueDate + "</td>";
+            	  // 반납 예정일을 yyyy-mm-dd 형식으로 변환
+            	 tableContent += "<td class='font-bold text-red-500'>" + loan.returnDueDate + "</td>";
 
             	 tableContent += "<td><a href='modify?id=" + loan.id + "'><button class='btn btn-warning'>수정</button></a></td>";
             	 tableContent += "<td><button class='btn btn-error' onclick='doDelete(" + loan.id + ");'>삭제</button></td>";

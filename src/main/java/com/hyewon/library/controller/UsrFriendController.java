@@ -1,14 +1,21 @@
 package com.hyewon.library.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.hyewon.library.service.FriendService;
 import com.hyewon.library.service.LoanService;
 import com.hyewon.library.util.Util;
@@ -164,6 +171,46 @@ public class UsrFriendController {
 	    
 	    return ResultData.from("S-1", "", "friends", friends);
 	}
+	
+	 @RequestMapping(value = "/user/friend/uploadExcel")
+	 @ResponseBody
+	   public String parseAndInsertExcel(@RequestParam("excelFile") MultipartFile excelFile) throws IOException, InvalidFormatException {
+		        try (InputStream inputStream = excelFile.getInputStream()) {
+					XSSFWorkbook workbook = new XSSFWorkbook(excelFile.getInputStream());
+		            Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트를 가져옴
+
+		            // 첫 번째 행은 데이터가 아니므로 건너뜀
+		            boolean firstRowSkipped = false;
+
+		            // 각 행을 반복하여 데이터베이스에 삽입
+		            for (Row row : sheet) {
+		                if (!firstRowSkipped) {
+		                    firstRowSkipped = true;
+		                    continue; // 첫 번째 행은 건너뜁니다.
+		                }
+
+		                // 셀에서 데이터 추출하여 변수에 저장
+		                String name = row.getCell(1).getStringCellValue();
+		                String inputString = row.getCell(2).getStringCellValue();
+
+		             // "대학교" 이전까지의 문자열을 학교 이름으로 저장
+		             String school = inputString.substring(0, inputString.indexOf("대학교")).trim();
+
+		             // "학과" 이전까지의 문자열을 학과 이름으로 저장
+		             String depart = inputString.substring(inputString.indexOf("대학교") + 3, inputString.indexOf("과")).trim();
+
+		                String cellphoneNum = row.getCell(3).getStringCellValue();
+		                String email = row.getCell(4).getStringCellValue();
+
+		                // BookService를 사용하여 데이터베이스에 책을 삽입
+		                friendService.doJoin(name, school, depart, cellphoneNum, email);
+		            }
+
+		            workbook.close();
+		        }
+				return Util.jsReplace(Util.f("친구 목록이 업데이트 되었습니다."), Util.f("read"));
+
+		    }
 
 
 	@RequestMapping("/user/friend/login")

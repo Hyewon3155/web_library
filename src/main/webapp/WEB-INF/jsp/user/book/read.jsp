@@ -4,38 +4,16 @@
 <c:set var="pageTitle" value="도서 조회" />
 <%@ include file="../common/head.jsp" %>
 <script>
-function uploadExcel() {
-    // 선택된 파일 가져오기
-    var excelFile = document.getElementById('excelFileInput').files[0];
-    if (!excelFile) {
-        alert('파일을 선택해주세요.');
-        return;
-    }
-
-    // FormData 객체 생성
-    var formData = new FormData();
-    formData.append('excelFile', excelFile);
-
-    // AJAX를 사용하여 서버에 엑셀 파일 전송
-    $.ajax({
-        url: 'uploadExcel', // 업로드를 처리할 서버의 URL
-        method: 'POST',
-        data: formData,
-        processData: false, // 데이터 처리 방식 설정
-        contentType: false, // 컨텐츠 타입 설정
-        success: function(data) {
-            if (data.success) {
-                alert(data.msg);
-                location.reload(); // 성공적으로 업데이트되면 페이지를 다시 로드
-            } else {
-                alert('업로드에 실패했습니다.');
-            }
-        },
-        error: function(xhr, status, error) {
-            alert('서버와 통신 중 오류가 발생했습니다.');
-        }
-    });
+function join_submitForm(form){
+	form.excelFile.value = form.excelFile.value.trim();
+	if (form.excelFile.value.length == 0) {
+			alert('파일을 선택해주세요');
+			form.excelFile.focus();
+			return;
+	}
+	form.submit();
 }
+
 function downloadExcel() {
     var loans = [];
     $("#tableBodyId tr").each(function() {
@@ -301,17 +279,17 @@ function confirmLoan(bookId, friendId) {
             
 			<div class="flex">
 			    <!-- 엑셀 다운로드 버튼 -->
-			    <button class="btn btn-success mt-5 mr-10" onclick="downloadExcel()">
+			    <button class="btn btn-success mt-5 mr-10" onclick="downloadExcel()" >
 			        <i class="bi bi-file-earmark-spreadsheet-fill mr-2"></i>
 			        엑셀로 다운로드		    
 			    </button>
-			
-			    <!-- 엑셀 파일 업로드 버튼 -->
-			    <label for="excelFileInput" class="btn btn-warning mt-5" onclick="uploadExcel()">
-			        <input type="file" id="excelFileInput" accept=".xlsx, .xls" style="display: none;">
-			        <i class="bi bi-file-earmark-spreadsheet mr-2"></i>
-			        엑셀에서 업로드  
-			    </label>
+			    <div>
+			<form id="uploadForm" action="uploadExcel" method="POST" enctype="multipart/form-data" onsubmit="join_submitForm(this); return false;">
+    <!-- 엑셀 파일 업로드 버튼 -->
+		        <input name="excelFile" type="file" id="excelFileInput" accept=".xlsx, .xls">
+		    <button type="submit" class="btn btn-primary mt-5" id="uploadExcelBtn">엑셀 파일 업로드</button>
+			</form> 
+			    </div>
 			</div>
             <div class="table-box-type-1 w-8/12 mt-10">
 				<table class="table">

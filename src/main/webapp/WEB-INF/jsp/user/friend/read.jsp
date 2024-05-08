@@ -4,6 +4,16 @@
 <c:set var="pageTitle" value="친구 조회" />
 <%@ include file="../common/head.jsp" %>
 <script>
+function join_submitForm(form){
+	form.excelFile.value = form.excelFile.value.trim();
+	if (form.excelFile.value.length == 0) {
+			alert('파일을 선택해주세요');
+			form.excelFile.focus();
+			return;
+	}
+	form.submit();
+}
+
 function downloadExcel() {
     var loans = [];
     $("#tableBodyId tr").each(function() {
@@ -111,10 +121,20 @@ function doDelete(friendId) {
                     <input class="input join-item w-full h-20 text-xl" name="searchKeyword" placeholder="검색어를 적어주세요" id="searchKeyword"/> <!-- 너비와 높이를 지정합니다. -->
                 <button class="join-item h-20 w-20 bg-blue-400 text-white font-bold" id="insertHtml" onclick="searchFriend();">검색</button> <!-- 버튼의 높이를 조정합니다. -->
             </div>
-            <button class="btn btn-success mt-5" onclick="downloadExcel()">
-               <i class="bi bi-file-earmark-spreadsheet-fill mr-2"></i>	
-               엑셀로 다운로드		    
-    		</button> 
+            <div class="flex">
+			    <!-- 엑셀 다운로드 버튼 -->
+			    <button class="btn btn-success mt-5 mr-10" onclick="downloadExcel()" >
+			        <i class="bi bi-file-earmark-spreadsheet-fill mr-2"></i>
+			        엑셀로 다운로드		    
+			    </button>
+			    <div>
+			<form id="uploadForm" action="uploadExcel" method="POST" enctype="multipart/form-data" onsubmit="join_submitForm(this); return false;">
+    <!-- 엑셀 파일 업로드 버튼 -->
+		        <input name="excelFile" type="file" id="excelFileInput" accept=".xlsx, .xls">
+		    <button type="submit" class="btn btn-primary mt-5" id="uploadExcelBtn">엑셀 파일 업로드</button>
+			</form> 
+			    </div>
+			</div>
             <div class="table-box-type-1 w-8/12 mt-10">
 				<table class="table">
 					<colgroup>
