@@ -7,11 +7,12 @@
 <script>
 function downloadExcel() {
     var loans = [];
-    var returnDate = $(this).find("td").eq(5).text().trim(); // 반납일을 가져옴
 
     // 반납일이 '반납하기'인 경우에는 빈 문자열로 설정, 그렇지 않은 경우에는 날짜 그대로 설정
-    var formattedReturnDate = returnDate === '반납하기' ? '' : returnDate;
     $("#tableBodyId tr").each(function() {
+        var returnDate = $(this).find("td").eq(4).text().trim(); // 반납일을 가져옴
+        var formattedReturnDate = returnDate === '반납하기' ? '' : returnDate;
+
         var loan = {
             번호: $(this).find("td").eq(0).text(),
             제목: $(this).find("td").eq(1).text(),
@@ -21,6 +22,7 @@ function downloadExcel() {
             반납예정일: $(this).find("td").eq(5).text(),
         };
         loans.push(loan);
+        console.log(formattedReturnDate);
     });
 
     // 엑셀 파일 형식 지정
@@ -121,13 +123,17 @@ function searchLoan(){
 
             	 tableContent += "<td class='font-bold'>" + loan.loanDate + "</td>";
 
-            	 if (loan.returnDate.trim() === '') {
+            
+            	 if (loan.returnDate === null) {
             		    // 대출이 반납된 경우
-            		    tableContent += "<td class='font-bold'>" + loan.returnDate + "</td>";
+            		    tableContent += "<td><button class='btn btn-warning' onclick='doReturn(" + loan.id + ");'>반납하기</button></td>";
             		} else {
             		    // 대출이 반납되지 않았을 경우
-            		    tableContent += "<td><button class='btn btn-warning' onclick='doReturn(" + loan.id + ");'>반납하기</button></td>";
+            		    tableContent += "<td class='font-bold'>" + loan.returnDate + "</td>";
             		}
+
+
+
 
             	  // 반납 예정일을 yyyy-mm-dd 형식으로 변환
             	 tableContent += "<td class='font-bold text-red-500'>" + loan.returnDueDate + "</td>";
