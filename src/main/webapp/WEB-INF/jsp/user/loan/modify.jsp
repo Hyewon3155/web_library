@@ -63,19 +63,17 @@ function searchBook(){
 
              // c:forEach 대체
              data.data1.forEach(function(book, index) {
-		    	 var typeCellContent = "";
+            	 var typeCellContent = "";
+            	    
+            	    if (book.type === "0") {
+            	        typeCellContent = '<td>비전공</td>';
+            	    } else if (book.type === "1") {
+            	        typeCellContent = '<td>전공</td>';
+            	    } else {
+            	        typeCellContent = '<td></td>';
+            	    }
 
-            	 if (book.type === "0") {
-            	     typeCellContent = '<td>비전공</td>';
-            	 } else if (book.type === "1") {
-            	     typeCellContent = '<td>전공</td>';
-            	 } else {
-		    	     typeCellContent = '<td></td>';
-		    	 }
-
-            	 
-            	 tableContent += "<tr class='text-black text-base'><td>" + (index + 1) + "</td><td>" + book.title + "</td><td>" + book.author + "</td><td>" + book.publisher + "</td>" + typeCellContent + "</tr>";
-
+            	    tableContent += "<tr class='text-black text-base'><td>" + (index + 1) + "</td><td><button class='text-blue-800 underline font-bold select-book-btn' data-book-id='" + book.id + "' data-book-title='" + book.title + "' onclick='showConfirmation(this)'>" + book.title + "</button></td><td>" + book.author + "</td><td>" + book.publisher + "</td>" + typeCellContent + "</tr>";
              });
 
              $("#tableBookId").html(tableContent);
@@ -97,7 +95,7 @@ function searchFriend(){
 
              // c:forEach 대체
              data.data1.forEach(function(friend, index) {
-            	 tableContent += "<tr class='text-black'><td>" + (index + 1) + "</td><td>" + friend.name + "</td><td>" + friend.school + "대학교 " + friend.depart + "과" + "</td><td>" + friend.cellphoneNum + "</td><td>" + friend.email + "</td></tr>";
+            	    tableContent += "<tr class='text-black'><td>" + (index + 1) + "</td><td><button class='text-blue-800 underline font-bold select-friend-btn' data-friend-id='" + friend.id + "' data-friend-name='" + friend.name + "' onclick='showFriendConfirmation(this)'>" + friend.name + "</button></td><td>" + friend.school + "대학교 " + friend.depart + "과" + "</td><td>" + friend.cellphoneNum + "</td><td>" + friend.email + "</td></tr>";
 
              });
 
@@ -249,7 +247,8 @@ function openFriendModal() {
 						        onclick="showFriendConfirmation(this)">
 						        ${friend.name}
 						    </button>
-						</td>                        <td>${friend.school }대학교 ${friend.depart }과</td>
+						</td>                        
+						<td>${friend.school }대학교 ${friend.depart }과</td>
                         <td>${friend.cellphoneNum }</td>
                         <td>${friend.email }</td>
                     </tr>
@@ -325,7 +324,7 @@ function openFriendModal() {
              <input type="hidden" name="id" value="${loan.id }"/>
            <input type="hidden" name="book_id" value="${loan.book_id }"/>
            <input type="hidden" name="friend_id" value="${loan.friend_id }"/>
-            <label for="title" class="block mb-2 text-base font-bold text-xl">도서명</label>
+            <div class="block mb-2 text-base font-bold text-xl">도서명</div>
             <div class="flex">
             <div id="selectedBook" class="input input-bordered w-5/6 p-2 mb-10 border rounded" style="cursor: pointer;" onclick="bookAlert();">
                 ${loan.title}
@@ -334,7 +333,7 @@ function openFriendModal() {
                 <i class="bi bi-search mr-2 font-extrabold"></i>도서 검색
             </div>
     </div>
-        <label for="friendName" class="block mb-2 font-bold text-xl">대출자</label>
+        <div class="block mb-2 font-bold text-xl">대출자</div>
             <div class="flex">
             <div id="selectedFriend" class="input input-bordered w-5/6 p-2 mb-10 border rounded" style="cursor: pointer;" onclick="friendAlert();">
                 ${loan.friendName}
@@ -343,16 +342,16 @@ function openFriendModal() {
                 <i class="bi bi-search mr-2 font-extrabold"></i>친구 검색
             </div>
     </div>
-    <label for="description" class="block mb-2 text-xl font-bold">날짜</label>
+    <div class="block mb-2 text-xl font-bold">날짜</div>
     <div class="flex justify-around">
         <!-- 설명 -->
-        <label for="loanDate" class="block mb-2 text-base font-medium">대출일자</label>
-        <label for="returnDate" class="block mb-2 text-base font-medium">반납일자</label>
+        <div class="block mb-2 text-base font-medium">대출일자</div>
+        <div class="block mb-2 text-base font-medium">반납일자</div>
     </div>
-    <label class="flex mb-10">
+    <div class="flex mb-10">
         <input type="date" name="loanDate" class="w-full p-2 mb-4 border rounded" value="${loan.loanDate}"/>-<input type="date" name="returnDate" class="w-full p-2 mb-4 border rounded" value="${loan.returnDate}"/>
-    </label>
-    <label for="returnDueDate" class="block mb-2 font-bold text-xl">반납 예정일</label>
+    </div>
+    <div class="block mb-2 font-bold text-xl">반납 예정일</div>
     <input type="date" name="returnDueDate" class="w-full p-2 mb-4 border rounded" value="${loan.returnDueDate}"/>
 
     <button class="btn w-full p-2 border rounded btn-success font-bold text-base mt-10 text-white">대출 이력 수정</button>

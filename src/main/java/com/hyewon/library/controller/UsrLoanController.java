@@ -141,7 +141,7 @@ public class UsrLoanController {
 	        loanService.doModify(id, book_id, friend_id, loanDate, returnDate, returnDueDate);
 	        
 	        // DB 쿼리가 정상적으로 실행됐을 때
-	        return Util.jsReplace(Util.f("대출 이력 정보가 수정되었습니다"), Util.f("read"));
+	        return Util.jsReplace(Util.f("대출 이력 정보가 수정되었습니다"), Util.f("read2"));
 	    } catch (NullPointerException e) {
 	        // Null 포인트 오류 처리
 	        e.printStackTrace();
@@ -264,6 +264,10 @@ public class UsrLoanController {
 	    return ResultData.from("S-1", "", "loans", loans);
 	}
 
+	@RequestMapping("/user/loan/read2")
+	public String showRead2() {
+		return "user/loan/read2";
+	}
 
         
 	
